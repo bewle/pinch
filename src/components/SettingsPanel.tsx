@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle } from "./ui/card";
 
 export default function SettingsPanel() {
   return (
-    <section className="flex h-full w-[60%] flex-col gap-4 p-6">
+    <section className="flex h-full flex-col gap-4 p-6">
       <div className="flex items-end justify-between">
         <h1 className="text-3xl font-bold">pinch</h1>
         <p className="opacity-60">choose your flavor</p>
@@ -12,7 +12,7 @@ export default function SettingsPanel() {
       <div className="flex justify-between gap-4">
         <FlavorSelect />
       </div>
-      <div>
+      <div className="relative">
         <ModelSelect />
       </div>
 

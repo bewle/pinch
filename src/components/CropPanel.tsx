@@ -1,45 +1,144 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "cropperjs/dist/cropper.css";
-import { Cropper as CropperComponent } from "react-cropper";
+import {
+  Cropper as CropperComponent,
+  ReactCropperElement,
+} from "react-cropper";
 import { Slider } from "./ui/slider";
+import { Button } from "./ui/button";
+import { ArrowDownToLine, Image, Import, Maximize } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
+import ImportButton from "./ImportButton";
+import { useImageUrlStore } from "@/lib/store/image-file";
+import { useFlavorStore } from "@/lib/store/flavor";
 
 export default function CropPanel() {
-  const [zoom, setZoom] = useState(0.22204806687565307);
-  const cropperRef = useRef(null);
+  const cropperRef = useRef<ReactCropperElement>(null);
+  const [zoom, setZoom] = useState(0.2);
+  const [shiftHeld, setShiftHeld] = useState(false);
+  const { imageUrl } = useImageUrlStore();
+  const { aspectX, aspectY } = useFlavorStore();
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Shift" && !shiftHeld) {
+        setShiftHeld(true);
+      }
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (event.key === "Shift" && shiftHeld) {
+        setShiftHeld(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [shiftHeld]);
+
+  useEffect(() => {
+    const cropper = cropperRef.current?.cropper;
+    if (zoom > 3) {
+      cropper?.zoom(3);
+    }
+    console.log(cropper);
+  }, [cropperRef.current?.cropper]);
 
   return (
-    <section className="flex h-full w-[40%] flex-col items-center justify-center border-r-[1px] border-solid">
+    <section className="relative flex h-full flex-col items-center justify-center gap-4">
+      <LeftButtons shiftHeld={shiftHeld} />
+      <RightButtons shiftHeld={shiftHeld} />
+      <Slider
+        className="absolute bottom-8 w-48"
+        onValueChange={(value) => {
+          console.log(value[0]);
+          setZoom(value[0] as number);
+        }}
+        defaultValue={[zoom]}
+        step={0.02}
+        value={[zoom]}
+        min={0.25396825396825395}
+        max={2.99}
+      />
       <CropperComponent
+        aspectRatio={aspectX / aspectY}
+        defaultValue={0}
+        max={2}
         ref={cropperRef}
-        src={"/media/template-image.png"}
-        width={275}
-        movable={true}
-        zoomable={true}
+        src={imageUrl ? imageUrl : ""}
+        width={300}
+        movable
+        zoomable
         cropBoxMovable={false}
         cropBoxResizable={false}
         dragMode="move"
         autoCropArea={1}
         viewMode={1}
         toggleDragModeOnDblclick={false}
-        wheelZoomRatio={0.2}
+        wheelZoomRatio={shiftHeld ? 1 : 0.05}
         zoomTo={zoom}
         zoom={(value) => {
-          setZoom(value.detail.ratio);
+          value.detail.ratio > 3 ? setZoom(2.99) : setZoom(value.detail.ratio);
         }}
-      />
-      <Slider
-        onValueChange={(value) => {
-          console.log(value[0]);
-          setZoom(value[0] as number);
-        }}
-        defaultValue={[0.2]}
-        step={0.02}
-        value={Array.from([zoom])}
-        min={0.2}
-        max={2}
+        zoomOnTouch
       />
     </section>
+  );
+}
+
+function LeftButtons({ shiftHeld }: { shiftHeld: boolean }) {
+  return (
+    <div className="absolute left-4 top-4 flex flex-col gap-2">
+      <ImportButton />
+      <TooltipProvider delayDuration={0}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={() => {
+                shiftHeld ? console.log("download") : console.log("preview");
+              }}
+              variant="secondary"
+              size="icon"
+            >
+              {shiftHeld ? <ArrowDownToLine /> : <Image />}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>{shiftHeld ? "download" : "preview"}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+  );
+}
+
+function RightButtons({ shiftHeld }: { shiftHeld: boolean }) {
+  return (
+    <div className="absolute right-4 top-4 flex flex-col gap-2">
+      <TooltipProvider delayDuration={0}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="secondary" size="icon">
+              <Maximize />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="left">
+            <p>fullscreen</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
   );
 }
