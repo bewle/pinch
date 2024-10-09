@@ -50,11 +50,11 @@ export default function CropPanel() {
 
   useEffect(() => {
     const cropper = cropperRef.current?.cropper;
-    if (zoom > 3) {
-      cropper?.zoom(3);
+    if (cropper) {
+      cropper.setAspectRatio(aspectX / aspectY);
     }
-    console.log(cropper);
-  }, [cropperRef.current?.cropper]);
+    console.log(aspectX / aspectY);
+  }, [aspectX, aspectY]);
 
   return (
     <section className="relative flex h-full flex-col items-center justify-center gap-4">
@@ -70,15 +70,13 @@ export default function CropPanel() {
         step={0.02}
         value={[zoom]}
         min={0.25396825396825395}
-        max={2.99}
+        max={3}
       />
       <CropperComponent
-        aspectRatio={aspectX / aspectY}
         defaultValue={0}
-        max={2}
         ref={cropperRef}
         src={imageUrl ? imageUrl : ""}
-        width={300}
+        width={200}
         movable
         zoomable
         cropBoxMovable={false}
@@ -89,8 +87,17 @@ export default function CropPanel() {
         toggleDragModeOnDblclick={false}
         wheelZoomRatio={shiftHeld ? 1 : 0.05}
         zoomTo={zoom}
-        zoom={(value) => {
-          value.detail.ratio > 3 ? setZoom(2.99) : setZoom(value.detail.ratio);
+        zoom={(event) => {
+          const newZoom = event.detail.ratio;
+          if (newZoom <= 3) {
+            setZoom(newZoom);
+          } else {
+            event.preventDefault();
+            const cropper = cropperRef.current?.cropper;
+            if (cropper) {
+              cropper.zoomTo(3);
+            }
+          }
         }}
         zoomOnTouch
       />
