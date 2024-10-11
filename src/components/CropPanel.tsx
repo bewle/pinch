@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import "cropperjs/dist/cropper.css";
 import {
   Cropper as CropperComponent,
-  ReactCropperElement,
+  type ReactCropperElement,
 } from "react-cropper";
 import { Slider } from "./ui/slider";
 import { Button } from "./ui/button";
-import { ArrowDownToLine, Image, Import, Maximize } from "lucide-react";
+import { ArrowDownToLine, Image, Maximize, Trash2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -23,13 +23,17 @@ export default function CropPanel() {
   const cropperRef = useRef<ReactCropperElement>(null);
   const [zoom, setZoom] = useState(0.2);
   const [shiftHeld, setShiftHeld] = useState(false);
-  const { imageUrl } = useImageUrlStore();
   const { aspectX, aspectY } = useFlavorStore();
+
+  const { imageUrl, setImageUrl } = useImageUrlStore();
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Shift" && !shiftHeld) {
         setShiftHeld(true);
+        const cropper = cropperRef.current?.cropper;
+        console.log("container: ", cropper?.getContainerData());
+        console.log("image: ", cropper?.getImageData());
       }
     };
 
@@ -56,74 +60,122 @@ export default function CropPanel() {
     console.log(aspectX / aspectY);
   }, [aspectX, aspectY]);
 
+  useEffect(() => {
+    console.log(zoom);
+  }, [zoom]);
+
+  function handleInputFile(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (file) {
+      setImageUrl(URL.createObjectURL(file));
+      console.log("new file: ", imageUrl);
+    }
+  }
+
   return (
     <section className="relative flex h-full flex-col items-center justify-center gap-4">
-      <LeftButtons shiftHeld={shiftHeld} />
-      <RightButtons shiftHeld={shiftHeld} />
-      <Slider
-        className="absolute bottom-8 w-48"
-        onValueChange={(value) => {
-          console.log(value[0]);
-          setZoom(value[0] as number);
-        }}
-        defaultValue={[zoom]}
-        step={0.02}
-        value={[zoom]}
-        min={0.25396825396825395}
-        max={3}
-      />
-      <CropperComponent
-        defaultValue={0}
-        ref={cropperRef}
-        src={imageUrl ? imageUrl : ""}
-        width={200}
-        movable
-        zoomable
-        cropBoxMovable={false}
-        cropBoxResizable={false}
-        dragMode="move"
-        autoCropArea={1}
-        viewMode={1}
-        toggleDragModeOnDblclick={false}
-        wheelZoomRatio={shiftHeld ? 1 : 0.05}
-        zoomTo={zoom}
-        zoom={(event) => {
-          const newZoom = event.detail.ratio;
-          if (newZoom <= 3) {
-            setZoom(newZoom);
-          } else {
-            event.preventDefault();
-            const cropper = cropperRef.current?.cropper;
-            if (cropper) {
-              cropper.zoomTo(3);
+      <LeftButtons shiftHeld={shiftHeld} imageUrl={imageUrl} />
+      {imageUrl ? <RightButtons /> : null}
+      {imageUrl ? <BottomRightButtons setImageUrl={setImageUrl} /> : null}
+      {imageUrl ? (
+        <CropperComponent
+          defaultValue={0}
+          ref={cropperRef}
+          src={imageUrl ? imageUrl : ""}
+          width={300}
+          movable
+          zoomable
+          cropBoxMovable={false}
+          cropBoxResizable={false}
+          dragMode="move"
+          autoCropArea={1}
+          viewMode={1}
+          toggleDragModeOnDblclick={false}
+          wheelZoomRatio={shiftHeld ? 1 : 0.05}
+          zoomTo={zoom}
+          zoom={(event) => {
+            const newZoom = event.detail.ratio;
+            if (newZoom <= 3) {
+              setZoom(newZoom);
+            } else {
+              event.preventDefault();
+              const cropper = cropperRef.current?.cropper;
+              if (cropper) {
+                cropper.zoomTo(3);
+              }
             }
-          }
-        }}
-        zoomOnTouch
-      />
+          }}
+          zoomOnTouch
+        />
+      ) : (
+        <div className="motion-preset-fade-lg flex size-56 cursor-pointer select-none flex-col items-center justify-center gap-4 border-2 border-dashed border-white opacity-25 transition-opacity motion-delay-500 hover:opacity-50">
+          <Image size={64} />
+          <div className="flex flex-col items-center gap-2">
+            <p>choose an image</p>
+            <p>paste, drag, or click/tap</p>
+          </div>
+          <input
+            type="file"
+            id="file-input"
+            className="hidden"
+            onChange={handleInputFile}
+          />
+        </div>
+      )}
     </section>
   );
 }
 
-function LeftButtons({ shiftHeld }: { shiftHeld: boolean }) {
+function LeftButtons({
+  shiftHeld,
+  imageUrl,
+}: {
+  shiftHeld: boolean;
+  imageUrl: string;
+}) {
   return (
-    <div className="absolute left-4 top-4 flex flex-col gap-2">
+    <div className="absolute left-4 top-4 flex flex-col gap-2 fade-in">
       <ImportButton />
+      {imageUrl ? (
+        <TooltipProvider delayDuration={0}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={() => {
+                  if (shiftHeld) {
+                    console.log("download");
+                  } else {
+                    console.log("preview");
+                  }
+                }}
+                variant="outline"
+                size="icon"
+              >
+                {shiftHeld ? <ArrowDownToLine /> : <Image />}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>{shiftHeld ? "download" : "preview"}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ) : null}
+    </div>
+  );
+}
+
+function RightButtons() {
+  return (
+    <div className="absolute right-4 top-4 flex flex-col gap-2">
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              onClick={() => {
-                shiftHeld ? console.log("download") : console.log("preview");
-              }}
-              variant="secondary"
-              size="icon"
-            >
-              {shiftHeld ? <ArrowDownToLine /> : <Image />}
+            <Button variant="outline" size="icon">
+              <Maximize />
             </Button>
           </TooltipTrigger>
-          <TooltipContent side="right">
-            <p>{shiftHeld ? "download" : "preview"}</p>
+          <TooltipContent side="left">
+            <p>fullscreen</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
@@ -131,18 +183,26 @@ function LeftButtons({ shiftHeld }: { shiftHeld: boolean }) {
   );
 }
 
-function RightButtons({ shiftHeld }: { shiftHeld: boolean }) {
+function BottomRightButtons({
+  setImageUrl,
+}: {
+  setImageUrl: (url: string) => void;
+}) {
   return (
-    <div className="absolute right-4 top-4 flex flex-col gap-2">
+    <div className="absolute bottom-4 right-4 flex flex-col gap-2">
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="secondary" size="icon">
-              <Maximize />
+            <Button
+              onClick={() => setImageUrl("")}
+              variant="outline"
+              size="icon"
+            >
+              <Trash2 />
             </Button>
           </TooltipTrigger>
           <TooltipContent side="left">
-            <p>fullscreen</p>
+            <p>clear</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

@@ -8,14 +8,14 @@ export default function FlavorSelect() {
   return (
     <>
       <Button
-        onClick={() => setFlavor("iphone")}
-        variant={flavor === "iphone" ? undefined : "secondary"}
+        onClick={() => setFlavor("apple")}
+        variant={flavor === "apple" ? undefined : "outline"}
         className="flex-1"
       >
-        iphone
+        apple
       </Button>
       <Button
-        variant={flavor === "android" ? undefined : "secondary"}
+        variant={flavor === "android" ? undefined : "outline"}
         onClick={() => setFlavor("android")}
         className="flex-1"
       >
@@ -23,7 +23,7 @@ export default function FlavorSelect() {
       </Button>
       <Button
         onClick={() => setFlavor("custom")}
-        variant={flavor === "custom" ? undefined : "secondary"}
+        variant={flavor === "custom" ? undefined : "outline"}
         className="custom flex-1"
       >
         custom

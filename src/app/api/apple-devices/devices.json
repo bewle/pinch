@@ -1,0 +1,324 @@
+[
+    {
+        "model": "iPhone 16 Pro Max",
+        "physicalWidth": 1320,
+        "physicalHeight": 2868,
+        "logicalWidth": 440,
+        "logicalHeight": 956
+    },
+    {
+        "model": "iPhone 16 Plus",
+        "physicalWidth": 1290,
+        "physicalHeight": 2796,
+        "logicalWidth": 430,
+        "logicalHeight": 932
+    },
+    {
+        "model": "iPhone 15 Pro Max",
+        "physicalWidth": 1290,
+        "physicalHeight": 2796,
+        "logicalWidth": 430,
+        "logicalHeight": 932
+    },
+    {
+        "model": "iPhone 15 Plus",
+        "physicalWidth": 1290,
+        "physicalHeight": 2796,
+        "logicalWidth": 430,
+        "logicalHeight": 932
+    },
+    {
+        "model": "iPhone 14 Pro Max",
+        "physicalWidth": 1290,
+        "physicalHeight": 2796,
+        "logicalWidth": 430,
+        "logicalHeight": 932
+    },
+    {
+        "model": "iPhone 14 Plus",
+        "physicalWidth": 1284,
+        "physicalHeight": 2778,
+        "logicalWidth": 428,
+        "logicalHeight": 926
+    },
+    {
+        "model": "iPhone 13 Pro Max",
+        "physicalWidth": 1284,
+        "physicalHeight": 2778,
+        "logicalWidth": 428,
+        "logicalHeight": 926
+    },
+    {
+        "model": "iPhone 12 Pro Max",
+        "physicalWidth": 1284,
+        "physicalHeight": 2778,
+        "logicalWidth": 428,
+        "logicalHeight": 926
+    },
+    {
+        "model": "iPhone 11 Pro Max",
+        "physicalWidth": 1242,
+        "physicalHeight": 2688,
+        "logicalWidth": 414,
+        "logicalHeight": 896
+    },
+    {
+        "model": "iPhone 11",
+        "physicalWidth": 828,
+        "physicalHeight": 1792,
+        "logicalWidth": 414,
+        "logicalHeight": 896
+    },
+    {
+        "model": "iPhone XR",
+        "physicalWidth": 828,
+        "physicalHeight": 1792,
+        "logicalWidth": 414,
+        "logicalHeight": 896
+    },
+    {
+        "model": "iPhone XS Max",
+        "physicalWidth": 1242,
+        "physicalHeight": 2688,
+        "logicalWidth": 414,
+        "logicalHeight": 896
+    },
+    {
+        "model": "iPhone 16 Pro",
+        "physicalWidth": 1206,
+        "physicalHeight": 2622,
+        "logicalWidth": 402,
+        "logicalHeight": 874
+    },
+    {
+        "model": "iPhone 16",
+        "physicalWidth": 1179,
+        "physicalHeight": 2556,
+        "logicalWidth": 393,
+        "logicalHeight": 852
+    },
+    {
+        "model": "iPhone 15 Pro",
+        "physicalWidth": 1179,
+        "physicalHeight": 2556,
+        "logicalWidth": 393,
+        "logicalHeight": 852
+    },
+    {
+        "model": "iPhone 15",
+        "physicalWidth": 1179,
+        "physicalHeight": 2556,
+        "logicalWidth": 393,
+        "logicalHeight": 852
+    },
+    {
+        "model": "iPhone 14 Pro",
+        "physicalWidth": 1179,
+        "physicalHeight": 2556,
+        "logicalWidth": 393,
+        "logicalHeight": 852
+    },
+    {
+        "model": "iPhone 14",
+        "physicalWidth": 1170,
+        "physicalHeight": 2532,
+        "logicalWidth": 390,
+        "logicalHeight": 844
+    },
+    {
+        "model": "iPhone 13",
+        "physicalWidth": 1170,
+        "physicalHeight": 2532,
+        "logicalWidth": 390,
+        "logicalHeight": 844
+    },
+    {
+        "model": "iPhone 13 Pro",
+        "physicalWidth": 1170,
+        "physicalHeight": 2532,
+        "logicalWidth": 390,
+        "logicalHeight": 844
+    },
+    {
+        "model": "iPhone 12",
+        "physicalWidth": 1170,
+        "physicalHeight": 2532,
+        "logicalWidth": 390,
+        "logicalHeight": 844
+    },
+    {
+        "model": "iPhone 12 Pro",
+        "physicalWidth": 1170,
+        "physicalHeight": 2532,
+        "logicalWidth": 390,
+        "logicalHeight": 844
+    },
+    {
+        "model": "iPhone 13 mini",
+        "physicalWidth": 1080,
+        "physicalHeight": 2340,
+        "logicalWidth": 375,
+        "logicalHeight": 812
+    },
+    {
+        "model": "iPhone 12 mini",
+        "physicalWidth": 1080,
+        "physicalHeight": 2340,
+        "logicalWidth": 375,
+        "logicalHeight": 812
+    },
+    {
+        "model": "iPhone 11 Pro",
+        "physicalWidth": 1125,
+        "physicalHeight": 2436,
+        "logicalWidth": 375,
+        "logicalHeight": 812
+    },
+    {
+        "model": "iPhone XS",
+        "physicalWidth": 1125,
+        "physicalHeight": 2436,
+        "logicalWidth": 375,
+        "logicalHeight": 812
+    },
+    {
+        "model": "iPhone X",
+        "physicalWidth": 1125,
+        "physicalHeight": 2436,
+        "logicalWidth": 375,
+        "logicalHeight": 812
+    },
+    {
+        "model": "iPhone 8 Plus",
+        "physicalWidth": 1080,
+        "physicalHeight": 1920,
+        "logicalWidth": 414,
+        "logicalHeight": 736
+    },
+    {
+        "model": "iPhone 7 Plus",
+        "physicalWidth": 1080,
+        "physicalHeight": 1920,
+        "logicalWidth": 414,
+        "logicalHeight": 736
+    },
+    {
+        "model": "iPhone 6s Plus",
+        "physicalWidth": 1080,
+        "physicalHeight": 1920,
+        "logicalWidth": 414,
+        "logicalHeight": 736
+    },
+    {
+        "model": "iPhone 6 Plus",
+        "physicalWidth": 1080,
+        "physicalHeight": 1920,
+        "logicalWidth": 414,
+        "logicalHeight": 736
+    },
+    {
+        "model": "iPhone SE 3rd gen",
+        "physicalWidth": 750,
+        "physicalHeight": 1334,
+        "logicalWidth": 375,
+        "logicalHeight": 667
+    },
+    {
+        "model": "iPhone SE 2nd gen",
+        "physicalWidth": 750,
+        "physicalHeight": 1334,
+        "logicalWidth": 375,
+        "logicalHeight": 667
+    },
+    {
+        "model": "iPhone 8",
+        "physicalWidth": 750,
+        "physicalHeight": 1334,
+        "logicalWidth": 375,
+        "logicalHeight": 667
+    },
+    {
+        "model": "iPhone 7",
+        "physicalWidth": 750,
+        "physicalHeight": 1334,
+        "logicalWidth": 375,
+        "logicalHeight": 667
+    },
+    {
+        "model": "iPhone 6s",
+        "physicalWidth": 750,
+        "physicalHeight": 1334,
+        "logicalWidth": 375,
+        "logicalHeight": 667
+    },
+    {
+        "model": "iPhone 6",
+        "physicalWidth": 750,
+        "physicalHeight": 1334,
+        "logicalWidth": 375,
+        "logicalHeight": 667
+    },
+    {
+        "model": "iPhone SE 1st gen",
+        "physicalWidth": 640,
+        "physicalHeight": 1136,
+        "logicalWidth": 320,
+        "logicalHeight": 568
+    },
+    {
+        "model": "iPhone 5C",
+        "physicalWidth": 640,
+        "physicalHeight": 1136,
+        "logicalWidth": 320,
+        "logicalHeight": 568
+    },
+    {
+        "model": "iPhone 5S",
+        "physicalWidth": 640,
+        "physicalHeight": 1136,
+        "logicalWidth": 320,
+        "logicalHeight": 568
+    },
+    {
+        "model": "iPhone 5",
+        "physicalWidth": 640,
+        "physicalHeight": 1136,
+        "logicalWidth": 320,
+        "logicalHeight": 568
+    },
+    {
+        "model": "iPhone 4S",
+        "physicalWidth": 640,
+        "physicalHeight": 960,
+        "logicalWidth": 320,
+        "logicalHeight": 480
+    },
+    {
+        "model": "iPhone 4",
+        "physicalWidth": 640,
+        "physicalHeight": 960,
+        "logicalWidth": 320,
+        "logicalHeight": 480
+    },
+    {
+        "model": "iPhone 3GS",
+        "physicalWidth": 320,
+        "physicalHeight": 480,
+        "logicalWidth": 320,
+        "logicalHeight": 480
+    },
+    {
+        "model": "iPhone 3G",
+        "physicalWidth": 320,
+        "physicalHeight": 480,
+        "logicalWidth": 320,
+        "logicalHeight": 480
+    },
+    {
+        "model": "iPhone 1st gen",
+        "physicalWidth": 320,
+        "physicalHeight": 480,
+        "logicalWidth": 320,
+        "logicalHeight": 480
+    }
+]

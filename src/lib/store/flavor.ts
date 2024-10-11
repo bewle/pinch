@@ -10,9 +10,9 @@ type FlavorStore = {
 }
 
 export const useFlavorStore = create<FlavorStore>()(set => ({
-    flavor: "custom",
+    flavor: "apple",
     setFlavor: (flavor: string) => set({ flavor }),
-    aspectX: 16,
-    aspectY: 9,
+    aspectX: 440,
+    aspectY: 956,
     setAspect: (aspectX: number, aspectY: number) => set({ aspectX, aspectY })
 }))

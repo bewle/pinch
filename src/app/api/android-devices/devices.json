@@ -1,0 +1,170 @@
+[
+    {
+        "model": "Nexus 6P",
+        "physicalWidth": 1440,
+        "physicalHeight": 2560,
+        "logicalWidth": 412,
+        "logicalHeight": 732
+    },
+    {
+        "model": "Nexus 5X",
+        "physicalWidth": 1080,
+        "physicalHeight": 1920,
+        "logicalWidth": 412,
+        "logicalHeight": 732
+    },
+    {
+        "model": "Google Pixel 7 Pro",
+        "physicalWidth": 1440,
+        "physicalHeight": 3120,
+        "logicalWidth": 412,
+        "logicalHeight": 771
+    },
+    {
+        "model": "Google Pixel 4 XL",
+        "physicalWidth": 1440,
+        "physicalHeight": 869,
+        "logicalWidth": 412,
+        "logicalHeight": 869
+    },
+    {
+        "model": "Google Pixel 4",
+        "physicalWidth": 1080,
+        "physicalHeight": 2280,
+        "logicalWidth": 412,
+        "logicalHeight": 869
+    },
+    {
+        "model": "Google Pixel 3a XL",
+        "physicalWidth": 1080,
+        "physicalHeight": 2160,
+        "logicalWidth": 412,
+        "logicalHeight": 824
+    },
+    {
+        "model": "Google Pixel 3a",
+        "physicalWidth": 1080,
+        "physicalHeight": 2220,
+        "logicalWidth": 412,
+        "logicalHeight": 846
+    },
+    {
+        "model": "Google Pixel 3 XL",
+        "physicalWidth": 1440,
+        "physicalHeight": 2960,
+        "logicalWidth": 412,
+        "logicalHeight": 847
+    },
+    {
+        "model": "Google Pixel 3",
+        "physicalWidth": 1080,
+        "physicalHeight": 2160,
+        "logicalWidth": 412,
+        "logicalHeight": 824
+    },
+    {
+        "model": "Google Pixel 2 XL",
+        "physicalWidth": 1440,
+        "physicalHeight": 2560,
+        "logicalWidth": 412,
+        "logicalHeight": 732
+    },
+    {
+        "model": "Google Pixel XL",
+        "physicalWidth": 1440,
+        "physicalHeight": 2560,
+        "logicalWidth": 412,
+        "logicalHeight": 732
+    },
+    {
+        "model": "Google Pixel",
+        "physicalWidth": 1080,
+        "physicalHeight": 1920,
+        "logicalWidth": 412,
+        "logicalHeight": 732
+    },
+    {
+        "model": "Samsung Galaxy Note 10+",
+        "physicalWidth": 1440,
+        "physicalHeight": 3040,
+        "logicalWidth": 412,
+        "logicalHeight": 869
+    },
+    {
+        "model": "Samsung Galaxy Note 10",
+        "physicalWidth": 1080,
+        "physicalHeight": 2280,
+        "logicalWidth": 412,
+        "logicalHeight": 869
+    },
+    {
+        "model": "Samsung Galaxy Note 9",
+        "physicalWidth": 1440,
+        "physicalHeight": 2960,
+        "logicalWidth": 360,
+        "logicalHeight": 740
+    },
+    {
+        "model": "Samsung Galaxy Note 5",
+        "physicalWidth": 1440,
+        "physicalHeight": 2560,
+        "logicalWidth": 480,
+        "logicalHeight": 853
+    },
+    {
+        "model": "LG G5",
+        "physicalWidth": 1440,
+        "physicalHeight": 2560,
+        "logicalWidth": 480,
+        "logicalHeight": 853
+    },
+    {
+        "model": "One Plus 3",
+        "physicalWidth": 1080,
+        "physicalHeight": 1920,
+        "logicalWidth": 480,
+        "logicalHeight": 853
+    },
+    {
+        "model": "Samsung Galaxy S9+",
+        "physicalWidth": 1440,
+        "physicalHeight": 2960,
+        "logicalWidth": 360,
+        "logicalHeight": 740
+    },
+    {
+        "model": "Samsung Galaxy S9",
+        "physicalWidth": 1440,
+        "physicalHeight": 2960,
+        "logicalWidth": 360,
+        "logicalHeight": 740
+    },
+    {
+        "model": "Samsung Galaxy S8+",
+        "physicalWidth": 1440,
+        "physicalHeight": 2960,
+        "logicalWidth": 360,
+        "logicalHeight": 740
+    },
+    {
+        "model": "Samsung Galaxy S8",
+        "physicalWidth": 1440,
+        "physicalHeight": 2960,
+        "logicalWidth": 360,
+        "logicalHeight": 740
+    },
+    {
+        "model": "Samsung Galaxy S7 Edge",
+        "physicalWidth": 1440,
+        "physicalHeight": 2560,
+        "logicalWidth": 360,
+        "logicalHeight": 640
+    },
+    {
+        "model": "Samsung Galaxy S7",
+        "physicalWidth": 1440,
+        "physicalHeight": 2560,
+        "logicalWidth": 360,
+        "logicalHeight": 640
+    }
+]

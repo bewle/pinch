@@ -8,7 +8,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { useRef } from "react";
-import { ImperativePanelHandle } from "react-resizable-panels";
+import { type ImperativePanelHandle } from "react-resizable-panels";
 
 export default function Page() {
   const settingsPanelRef = useRef<ImperativePanelHandle>(null);
@@ -29,8 +29,8 @@ export default function Page() {
 
   return (
     <main className="grid h-screen place-items-center">
+      {/* <CardMenubar /> */}
       <Card className="motion-preset-focus h-[80vh] sm:w-[90vw] md:w-[90vw] xl:w-[85vw] 2xl:w-[75vw]">
-        {/* <CardMenubar /> */}
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel className="w-full flex-grow-0">
             <CropPanel />

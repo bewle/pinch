@@ -1,4 +1,4 @@
-import { SetStateAction, useRef, useState } from "react";
+import { useRef } from "react";
 import { Button } from "./ui/button";
 import {
   Tooltip,
@@ -26,10 +26,8 @@ export default function ImportButton() {
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            onClick={() => {
-              inputRef.current?.click();
-            }}
-            variant="secondary"
+            onClick={() => inputRef.current?.click()}
+            variant="outline"
             size="icon"
           >
             <Import />
