@@ -1,20 +1,26 @@
-"use client";
 import { useFlavorStore } from "@/lib/store/flavor";
 import Custom from "./flavors/Custom";
-import { getDevices, type Device } from "@/lib/server/getDevices";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DataTable } from "@/app/devices/data-table";
 import { columns } from "@/app/devices/apple-devices";
+import { type Device, getDevices } from "@/lib/server/getDevices";
 
 export default function ModelSelect() {
   const [devices, setDevices] = useState<Device[]>([]);
   const { flavor } = useFlavorStore();
+  const devicesCache = useRef<Record<string, Device[]>>({});
 
   useEffect(() => {
-    console.log("attempting to get devices");
-    getDevices({ flavor })
-      .then((res) => setDevices(res))
-      .catch((err) => console.error(err));
+    if (devicesCache.current[flavor]) {
+      setDevices(devicesCache.current[flavor]);
+    } else {
+      getDevices({ flavor })
+        .then((res) => {
+          devicesCache.current[flavor] = res;
+          setDevices(res);
+        })
+        .catch((err) => console.error(err));
+    }
   }, [flavor]);
 
   return (

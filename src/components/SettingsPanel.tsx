@@ -1,7 +1,8 @@
 import FlavorSelect from "./FlavorSelect";
+import InfoButton from "./InfoButton";
 import ModelSelect from "./ModelSelect";
 import ThemeSwitch from "./ThemeToggle";
-import { Card, CardHeader, CardTitle } from "./ui/card";
+import { Button } from "./ui/button";
 
 export default function SettingsPanel() {
   return (
@@ -11,7 +12,10 @@ export default function SettingsPanel() {
           <h1 className="text-3xl font-bold">pinch</h1>
           <p className="opacity-60">choose your flavor</p>
         </div>
-        <ThemeSwitch />
+        <div className="flex items-center gap-2">
+          <InfoButton />
+          <ThemeSwitch />
+        </div>
       </div>
       <div className="flex justify-between gap-4">
         <FlavorSelect />
@@ -21,12 +25,8 @@ export default function SettingsPanel() {
       </div>
 
       <div className="flex gap-2">
-        <Card className="flex-1">
-          <CardTitle>
-            <CardHeader>properties</CardHeader>
-          </CardTitle>
-        </Card>
-        <Card className="flex-1">model</Card>
+        <Button className="flex-grow">preview</Button>
+        <Button className="flex-grow">import</Button>
       </div>
     </section>
   );

@@ -10,14 +10,13 @@ import { Import } from "lucide-react";
 import { useImageUrlStore } from "@/lib/store/image-file";
 
 export default function ImportButton() {
-  const { imageUrl, setImageUrl } = useImageUrlStore();
+  const { setImageUrl } = useImageUrlStore();
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleInputFile(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (file) {
       setImageUrl(URL.createObjectURL(file));
-      console.log("new file: ", imageUrl);
     }
   }
 

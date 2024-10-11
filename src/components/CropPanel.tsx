@@ -23,7 +23,7 @@ export default function CropPanel() {
   const cropperRef = useRef<ReactCropperElement>(null);
   const [zoom, setZoom] = useState(0.2);
   const [shiftHeld, setShiftHeld] = useState(false);
-  const { aspectX, aspectY } = useFlavorStore();
+  const { width, height } = useFlavorStore();
 
   const { imageUrl, setImageUrl } = useImageUrlStore();
 
@@ -31,9 +31,6 @@ export default function CropPanel() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Shift" && !shiftHeld) {
         setShiftHeld(true);
-        const cropper = cropperRef.current?.cropper;
-        console.log("container: ", cropper?.getContainerData());
-        console.log("image: ", cropper?.getImageData());
       }
     };
 
@@ -55,20 +52,15 @@ export default function CropPanel() {
   useEffect(() => {
     const cropper = cropperRef.current?.cropper;
     if (cropper) {
-      cropper.setAspectRatio(aspectX / aspectY);
+      cropper.setAspectRatio(width / height);
     }
-    console.log(aspectX / aspectY);
-  }, [aspectX, aspectY]);
-
-  useEffect(() => {
-    console.log(zoom);
-  }, [zoom]);
+    console.log(cropper?.getData());
+  }, [width, height]);
 
   function handleInputFile(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (file) {
       setImageUrl(URL.createObjectURL(file));
-      console.log("new file: ", imageUrl);
     }
   }
 
@@ -82,7 +74,7 @@ export default function CropPanel() {
           defaultValue={0}
           ref={cropperRef}
           src={imageUrl ? imageUrl : ""}
-          width={300}
+          width={400}
           movable
           zoomable
           cropBoxMovable={false}
@@ -108,7 +100,7 @@ export default function CropPanel() {
           zoomOnTouch
         />
       ) : (
-        <div className="motion-preset-fade-lg flex size-56 cursor-pointer select-none flex-col items-center justify-center gap-4 border-2 border-dashed border-white opacity-25 transition-opacity motion-delay-500 hover:opacity-50">
+        <div className="motion-preset-fade-lg flex size-80 cursor-pointer select-none flex-col items-center justify-center gap-4 opacity-25 transition-opacity motion-delay-500 hover:opacity-50">
           <Image size={64} />
           <div className="flex flex-col items-center gap-2">
             <p>choose an image</p>
@@ -140,17 +132,7 @@ function LeftButtons({
         <TooltipProvider delayDuration={0}>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                onClick={() => {
-                  if (shiftHeld) {
-                    console.log("download");
-                  } else {
-                    console.log("preview");
-                  }
-                }}
-                variant="outline"
-                size="icon"
-              >
+              <Button variant="outline" size="icon">
                 {shiftHeld ? <ArrowDownToLine /> : <Image />}
               </Button>
             </TooltipTrigger>
