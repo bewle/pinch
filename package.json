@@ -40,6 +40,7 @@
     "react-cropper": "^2.3.3",
     "react-dom": "^0.0.0-experimental-ed966dac-20241007",
     "react-dropzone": "^14.2.9",
+    "react-easy-crop": "^5.1.0",
     "react-hook-form": "^7.53.0",
     "react-resizable-panels": "^2.1.4",
     "tailwind-merge": "^2.5.3",

@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import "cropperjs/dist/cropper.css";
-import {
-  Cropper as CropperComponent,
-  type ReactCropperElement,
-} from "react-cropper";
+// import "cropperjs/dist/cropper.css";
+// import {
+//   Cropper as CropperComponent,
+//   type ReactCropperElement,
+// } from "react-cropper";
+import { Point, Area } from "react-easy-crop";
+import Cropper from "react-easy-crop";
 import { Button } from "./ui/button";
 import { ArrowDownToLine, Image, Maximize, Trash2 } from "lucide-react";
 import {
@@ -18,13 +20,14 @@ import ImportButton from "./ImportButton";
 import { useImageUrlStore } from "@/lib/store/image-file";
 import { useFlavorStore } from "@/lib/store/flavor";
 import ImageDropzone from "./ImageDropzone";
+import CropComponent from "./CropComponent";
 
 export default function CropPanel({
   isSettingsPanelOpen,
 }: {
   isSettingsPanelOpen: boolean;
 }) {
-  const cropperRef = useRef<ReactCropperElement>(null);
+  // const cropperRef = useRef<ReactCropperElement>(null);
   const [shiftHeld, setShiftHeld] = useState(false);
   const [zoom, setZoom] = useState(0.2);
   const { width, height } = useFlavorStore();
@@ -52,51 +55,52 @@ export default function CropPanel({
     };
   }, [shiftHeld]);
 
-  useEffect(() => {
-    const cropper = cropperRef.current?.cropper;
-    if (cropper) {
-      cropper.setAspectRatio(width / height);
-    }
-    console.log(cropper?.getData());
-  }, [width, height]);
+  // useEffect(() => {
+  //   const cropper = cropperRef.current?.cropper;
+  //   if (cropper) {
+  //     cropper.setAspectRatio(width / height);
+  //   }
+  //   console.log(cropper?.getData());
+  // }, [width, height]);
 
   return (
     <section className="relative flex h-full flex-col items-center justify-center gap-4">
       <ImageDropzone />
       <LeftButtons shiftHeld={shiftHeld} imageUrl={imageUrl} />
       {imageUrl ? <RightButtons /> : null}
-      {imageUrl ? <BottomRightButtons setImageUrl={setImageUrl} /> : null}
+      {imageUrl ? <BottomRightButtons /> : null}
       {imageUrl ? (
-        <CropperComponent
-          defaultValue={0}
-          ref={cropperRef}
-          zoomOnTouch
-          movable
-          style={{ height: isSettingsPanelOpen ? 400 : 800 }}
-          height={height}
-          zoomable
-          cropBoxMovable={false}
-          cropBoxResizable={false}
-          dragMode="move"
-          autoCropArea={1}
-          viewMode={1}
-          toggleDragModeOnDblclick={false}
-          src={imageUrl ? imageUrl : ""}
-          wheelZoomRatio={shiftHeld ? 1 : 0.05}
-          zoomTo={zoom}
-          zoom={(event) => {
-            const newZoom = event.detail.ratio;
-            if (newZoom <= 3) {
-              setZoom(newZoom);
-            } else {
-              event.preventDefault();
-              const cropper = cropperRef.current?.cropper;
-              if (cropper) {
-                cropper.zoomTo(3);
-              }
-            }
-          }}
-        />
+        // <CropperComponent
+        //   defaultValue={0}
+        //   ref={cropperRef}
+        //   zoomOnTouch
+        //   movable
+        //   height={800}
+        //   zoomable
+        //   cropBoxMovable={false}
+        //   cropBoxResizable={false}
+        //   dragMode="move"
+        //   autoCropArea={1}
+        //   viewMode={1}
+        //   toggleDragModeOnDblclick={false}
+        //   src={imageUrl ? imageUrl : ""}
+        //   wheelZoomRatio={shiftHeld ? 1 : 0.05}
+        //   zoomTo={zoom}
+        //   zoom={(event) => {
+        //     const newZoom = event.detail.ratio;
+        //     if (newZoom <= 3) {
+        //       setZoom(newZoom);
+        //     } else {
+        //       event.preventDefault();
+        //       const cropper = cropperRef.current?.cropper;
+        //       if (cropper) {
+        //         cropper.zoomTo(3);
+        //       }
+        //     }
+        //   }}
+        // />
+
+        <CropComponent />
       ) : (
         <div className="flex flex-col items-center gap-4 opacity-50">
           <Image size={64} />
@@ -118,7 +122,7 @@ function LeftButtons({
   imageUrl: string;
 }) {
   return (
-    <div className="absolute left-4 top-4 flex flex-col gap-2 fade-in">
+    <div className="absolute left-4 top-4 z-10 flex flex-col gap-2 fade-in">
       <ImportButton />
       {imageUrl ? (
         <TooltipProvider delayDuration={0}>
@@ -140,7 +144,7 @@ function LeftButtons({
 
 function RightButtons() {
   return (
-    <div className="absolute right-4 top-4 flex flex-col gap-2">
+    <div className="absolute right-4 top-4 z-10 flex flex-col gap-2">
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -157,13 +161,11 @@ function RightButtons() {
   );
 }
 
-function BottomRightButtons({
-  setImageUrl,
-}: {
-  setImageUrl: (url: string) => void;
-}) {
+function BottomRightButtons() {
+  const { setImageUrl } = useImageUrlStore();
+
   return (
-    <div className="absolute bottom-4 right-4 flex flex-col gap-2">
+    <div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
