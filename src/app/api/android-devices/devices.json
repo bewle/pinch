@@ -166,5 +166,19 @@
         "physicalHeight": 2560,
         "logicalWidth": 360,
         "logicalHeight": 640
+    },
+    {
+        "model": "BlackBerry Z30",
+        "physicalHeight": 1280,
+        "physicalWidth": 720,
+        "logicalHeight": 1280,
+        "logicalWidth": 720
+    },
+    {
+        "model": "Zune 30",
+        "physicalHeight": 320,
+        "physicalWidth": 240,
+        "logicalHeight": 320,
+        "logicalWidth": 240
     }
 ]

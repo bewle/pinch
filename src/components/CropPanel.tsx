@@ -6,7 +6,6 @@ import {
   Cropper as CropperComponent,
   type ReactCropperElement,
 } from "react-cropper";
-import { Slider } from "./ui/slider";
 import { Button } from "./ui/button";
 import { ArrowDownToLine, Image, Maximize, Trash2 } from "lucide-react";
 import {
@@ -18,13 +17,17 @@ import {
 import ImportButton from "./ImportButton";
 import { useImageUrlStore } from "@/lib/store/image-file";
 import { useFlavorStore } from "@/lib/store/flavor";
+import ImageDropzone from "./ImageDropzone";
 
-export default function CropPanel() {
+export default function CropPanel({
+  isSettingsPanelOpen,
+}: {
+  isSettingsPanelOpen: boolean;
+}) {
   const cropperRef = useRef<ReactCropperElement>(null);
-  const [zoom, setZoom] = useState(0.2);
   const [shiftHeld, setShiftHeld] = useState(false);
+  const [zoom, setZoom] = useState(0.2);
   const { width, height } = useFlavorStore();
-
   const { imageUrl, setImageUrl } = useImageUrlStore();
 
   useEffect(() => {
@@ -57,15 +60,9 @@ export default function CropPanel() {
     console.log(cropper?.getData());
   }, [width, height]);
 
-  function handleInputFile(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file) {
-      setImageUrl(URL.createObjectURL(file));
-    }
-  }
-
   return (
     <section className="relative flex h-full flex-col items-center justify-center gap-4">
+      <ImageDropzone />
       <LeftButtons shiftHeld={shiftHeld} imageUrl={imageUrl} />
       {imageUrl ? <RightButtons /> : null}
       {imageUrl ? <BottomRightButtons setImageUrl={setImageUrl} /> : null}
@@ -73,9 +70,10 @@ export default function CropPanel() {
         <CropperComponent
           defaultValue={0}
           ref={cropperRef}
-          src={imageUrl ? imageUrl : ""}
-          width={400}
+          zoomOnTouch
           movable
+          style={{ height: isSettingsPanelOpen ? 400 : 800 }}
+          height={height}
           zoomable
           cropBoxMovable={false}
           cropBoxResizable={false}
@@ -83,6 +81,7 @@ export default function CropPanel() {
           autoCropArea={1}
           viewMode={1}
           toggleDragModeOnDblclick={false}
+          src={imageUrl ? imageUrl : ""}
           wheelZoomRatio={shiftHeld ? 1 : 0.05}
           zoomTo={zoom}
           zoom={(event) => {
@@ -97,21 +96,14 @@ export default function CropPanel() {
               }
             }
           }}
-          zoomOnTouch
         />
       ) : (
-        <div className="motion-preset-fade-lg flex size-80 cursor-pointer select-none flex-col items-center justify-center gap-4 opacity-25 transition-opacity motion-delay-500 hover:opacity-50">
+        <div className="flex flex-col items-center gap-4 opacity-50">
           <Image size={64} />
           <div className="flex flex-col items-center gap-2">
             <p>choose an image</p>
             <p>paste, drag, or click/tap</p>
           </div>
-          <input
-            type="file"
-            id="file-input"
-            className="hidden"
-            onChange={handleInputFile}
-          />
         </div>
       )}
     </section>

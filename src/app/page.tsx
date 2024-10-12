@@ -1,17 +1,18 @@
 "use client";
 import CropPanel from "@/components/CropPanel";
 import SettingsPanel from "@/components/SettingsPanel";
-import { Card } from "@/components/ui/card";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { useRef } from "react";
+import { ChevronsLeft } from "lucide-react";
+import { useRef, useState } from "react";
 import { type ImperativePanelHandle } from "react-resizable-panels";
 
 export default function Page() {
   const settingsPanelRef = useRef<ImperativePanelHandle>(null);
+  const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);
 
   const expandPanel = () => {
     const panel = settingsPanelRef.current;
@@ -22,7 +23,6 @@ export default function Page() {
 
   function handleDoubleClick() {
     const settingsPanel = settingsPanelRef.current;
-
     settingsPanel?.resize(50);
   }
 
@@ -32,16 +32,36 @@ export default function Page() {
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel
           onResize={(size) => console.log(size)}
-          className="w-full flex-grow-0"
+          className="relative w-full flex-grow-0"
         >
-          <CropPanel />
+          <CropPanel isSettingsPanelOpen={isSettingsPanelOpen} />
+          <ChevronsLeft
+            onClick={() => {
+              settingsPanelRef.current?.expand();
+              setIsSettingsPanelOpen(true);
+            }}
+            size={32}
+            className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer opacity-50 transition-all hover:-translate-x-2 hover:opacity-100"
+            style={{
+              display: isSettingsPanelOpen ? "none" : "block",
+            }}
+          />
         </ResizablePanel>
-        <ResizableHandle withHandle onDoubleClick={handleDoubleClick} />
+        <ResizableHandle
+          withHandle={isSettingsPanelOpen}
+          onDoubleClick={handleDoubleClick}
+        />
         <ResizablePanel
           ref={settingsPanelRef}
           minSize={25}
           maxSize={55}
-          onExpand={expandPanel}
+          onExpand={() => {
+            expandPanel();
+            setIsSettingsPanelOpen(true);
+          }}
+          onCollapse={() => {
+            setIsSettingsPanelOpen(false);
+          }}
           collapsible
         >
           <SettingsPanel />
