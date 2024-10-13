@@ -1,13 +1,4 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-// import "cropperjs/dist/cropper.css";
-// import {
-//   Cropper as CropperComponent,
-//   type ReactCropperElement,
-// } from "react-cropper";
-import { Point, Area } from "react-easy-crop";
-import Cropper from "react-easy-crop";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { ArrowDownToLine, Image, Maximize, Trash2 } from "lucide-react";
 import {
@@ -18,20 +9,12 @@ import {
 } from "./ui/tooltip";
 import ImportButton from "./ImportButton";
 import { useImageUrlStore } from "@/lib/store/image-file";
-import { useFlavorStore } from "@/lib/store/flavor";
 import ImageDropzone from "./ImageDropzone";
 import CropComponent from "./CropComponent";
 
-export default function CropPanel({
-  isSettingsPanelOpen,
-}: {
-  isSettingsPanelOpen: boolean;
-}) {
-  // const cropperRef = useRef<ReactCropperElement>(null);
+export default function CropPanel() {
   const [shiftHeld, setShiftHeld] = useState(false);
-  const [zoom, setZoom] = useState(0.2);
-  const { width, height } = useFlavorStore();
-  const { imageUrl, setImageUrl } = useImageUrlStore();
+  const { imageUrl } = useImageUrlStore();
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -55,14 +38,6 @@ export default function CropPanel({
     };
   }, [shiftHeld]);
 
-  // useEffect(() => {
-  //   const cropper = cropperRef.current?.cropper;
-  //   if (cropper) {
-  //     cropper.setAspectRatio(width / height);
-  //   }
-  //   console.log(cropper?.getData());
-  // }, [width, height]);
-
   return (
     <section className="relative flex h-full flex-col items-center justify-center gap-4">
       <ImageDropzone />
@@ -70,43 +45,18 @@ export default function CropPanel({
       {imageUrl ? <RightButtons /> : null}
       {imageUrl ? <BottomRightButtons /> : null}
       {imageUrl ? (
-        // <CropperComponent
-        //   defaultValue={0}
-        //   ref={cropperRef}
-        //   zoomOnTouch
-        //   movable
-        //   height={800}
-        //   zoomable
-        //   cropBoxMovable={false}
-        //   cropBoxResizable={false}
-        //   dragMode="move"
-        //   autoCropArea={1}
-        //   viewMode={1}
-        //   toggleDragModeOnDblclick={false}
-        //   src={imageUrl ? imageUrl : ""}
-        //   wheelZoomRatio={shiftHeld ? 1 : 0.05}
-        //   zoomTo={zoom}
-        //   zoom={(event) => {
-        //     const newZoom = event.detail.ratio;
-        //     if (newZoom <= 3) {
-        //       setZoom(newZoom);
-        //     } else {
-        //       event.preventDefault();
-        //       const cropper = cropperRef.current?.cropper;
-        //       if (cropper) {
-        //         cropper.zoomTo(3);
-        //       }
-        //     }
-        //   }}
-        // />
-
-        <CropComponent />
+        <div className="my-12 h-full w-full">
+          <CropComponent shiftHeld={shiftHeld} />
+        </div>
       ) : (
-        <div className="flex flex-col items-center gap-4 opacity-50">
-          <Image size={64} />
-          <div className="flex flex-col items-center gap-2">
-            <p>choose an image</p>
-            <p>paste, drag, or click/tap</p>
+        <div className="group select-none rounded-lg border-2 border-dotted p-8 opacity-50 transition-opacity hover:cursor-pointer hover:bg-muted/40 hover:opacity-75">
+          <div className="flex flex-col items-center gap-4 transition-transform group-hover:scale-[102%]">
+            {/* eslint-disable-next-line jsx-a11y/alt-text */}
+            <Image size={64} />
+            <div className="flex flex-col items-center gap-2">
+              <p>choose an image</p>
+              <p>paste, drag, or click/tap</p>
+            </div>
           </div>
         </div>
       )}

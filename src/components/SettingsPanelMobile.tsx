@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 
 export default function SettingsPanel() {
   return (
-    <section className="flex h-screen flex-col gap-4 p-6">
+    <section className="flex h-screen w-full flex-col gap-4 p-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">pinch</h1>
@@ -20,14 +20,11 @@ export default function SettingsPanel() {
       <div className="flex justify-between gap-4">
         <FlavorSelect />
       </div>
-      <div className="relative overflow-y-auto">
+      <div className="overflow-y-auto">
         <ModelSelect />
       </div>
 
-      {/* <div className="flex gap-2">
-        <Button className="flex-grow">preview</Button>
-        <Button className="flex-grow">import</Button>
-      </div> */}
+      <Button>import</Button>
     </section>
   );
 }

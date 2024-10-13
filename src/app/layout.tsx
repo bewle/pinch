@@ -1,4 +1,5 @@
 import { Providers } from "@/components/Providers";
+import { Toaster } from "@/components/ui/toaster";
 import "@/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
@@ -21,6 +22,7 @@ export default function RootLayout({
     >
       <body className="debug-screens">
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );

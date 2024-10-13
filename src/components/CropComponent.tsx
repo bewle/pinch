@@ -3,7 +3,7 @@ import { useImageUrlStore } from "@/lib/store/image-file";
 import { useState } from "react";
 import Cropper, { type Area } from "react-easy-crop";
 
-export default function CropComponent() {
+export default function CropComponent({ shiftHeld }: { shiftHeld: boolean }) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const { width, height } = useFlavorStore();
@@ -22,6 +22,7 @@ export default function CropComponent() {
       onCropChange={setCrop}
       onCropComplete={onCropComplete}
       onZoomChange={setZoom}
+      zoomSpeed={shiftHeld ? 0.25 : 0.05}
     />
   );
 }

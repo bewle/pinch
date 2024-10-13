@@ -1,27 +1,60 @@
 import Dropzone from "react-dropzone";
 import { useState } from "react";
 import { useImageUrlStore } from "@/lib/store/image-file";
+import { useToast } from "@/hooks/use-toast";
+import { validImageTypes } from "@/lib/validImageTypes";
+import { convertHeicToPng } from "@/lib/handleFileType";
+import { useProcessingStore } from "@/lib/store/processing";
 
 export default function ImageDropzone() {
   const [dragging, setDragging] = useState(false);
+  const { setProcessing } = useProcessingStore();
+  const { toast } = useToast();
   const { setImageUrl } = useImageUrlStore();
+
+  const handleDrop = async (acceptedFiles: File[]) => {
+    setDragging(false);
+
+    if (acceptedFiles.length > 1) {
+      toast({
+        title: "too many files",
+        description: "please upload only one file",
+      });
+      return;
+    }
+
+    switch (acceptedFiles[0]?.type) {
+      case "image/heic":
+        setProcessing(true);
+        const convertedFile = await convertHeicToPng(acceptedFiles[0]);
+        setImageUrl(URL.createObjectURL(convertedFile as Blob));
+        setProcessing(false);
+        break;
+      default:
+        setProcessing(true);
+        setImageUrl(URL.createObjectURL(acceptedFiles[0] as Blob));
+        setProcessing(false);
+    }
+  };
 
   return (
     <Dropzone
+      accept={{
+        "image/*": validImageTypes,
+      }}
+      onDropRejected={() => {
+        toast({
+          title: "invalid file type",
+          description: `supported file types: ${validImageTypes.join(", ")}`,
+        });
+      }}
       onDragEnter={() => {
         setDragging(true);
-        console.log("drag enter");
       }}
       onDragLeave={() => {
         setDragging(false);
-        console.log("drag leave");
       }}
-      onDrop={(acceptedFiles) => {
-        setDragging(false);
-        if (acceptedFiles[0]) {
-          setImageUrl(URL.createObjectURL(acceptedFiles[0]));
-        }
-      }}
+      onDrop={handleDrop}
     >
       {({ getRootProps }) => (
         <section
