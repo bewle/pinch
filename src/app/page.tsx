@@ -3,19 +3,20 @@ import CropPanel from "@/components/CropPanel";
 import ProcessingAlert from "@/components/ProcessingAlert";
 import SettingsPanel from "@/components/SettingsPanel";
 import SettingsPanelMobile from "@/components/SettingsPanelMobile";
+import { useIsSettingsPanelOpen } from "@/lib/store/settings-panel";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { ChevronsLeft } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { type ImperativePanelHandle } from "react-resizable-panels";
 import MediaQuery from "react-responsive";
 
 export default function Page() {
   const settingsPanelRef = useRef<ImperativePanelHandle>(null);
-  const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);
+  const { isOpen, setIsOpen } = useIsSettingsPanelOpen();
 
   const expandPanel = () => {
     const panel = settingsPanelRef.current;
@@ -24,13 +25,34 @@ export default function Page() {
     }
   };
 
+  const collapsePanel = () => {
+    const panel = settingsPanelRef.current;
+    if (!panel?.isCollapsed()) {
+      panel?.collapse();
+    }
+  };
+
   function handleDoubleClick() {
     const settingsPanel = settingsPanelRef.current;
     settingsPanel?.resize(50);
   }
 
+  useEffect(() => {
+    console.log(isOpen);
+    if (isOpen) {
+      expandPanel();
+    } else {
+      collapsePanel();
+    }
+  }, [isOpen]);
+
   return (
-    <main className="motion-preset-fade-lg grid h-screen place-items-center">
+    <main
+      onContextMenu={(e) => {
+        e.preventDefault();
+      }}
+      className="motion-preset-fade-lg grid h-screen place-items-center"
+    >
       <ProcessingAlert />
       {/* Desktop */}
       <MediaQuery minWidth={1226}>
@@ -43,17 +65,17 @@ export default function Page() {
             <ChevronsLeft
               onClick={() => {
                 settingsPanelRef.current?.expand();
-                setIsSettingsPanelOpen(true);
+                setIsOpen(true);
               }}
               size={32}
               className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer opacity-50 transition-all hover:-translate-x-2 hover:opacity-100"
               style={{
-                display: isSettingsPanelOpen ? "none" : "block",
+                display: isOpen ? "none" : "block",
               }}
             />
           </ResizablePanel>
           <ResizableHandle
-            withHandle={isSettingsPanelOpen}
+            withHandle={isOpen}
             onDoubleClick={handleDoubleClick}
           />
           <ResizablePanel
@@ -61,11 +83,10 @@ export default function Page() {
             minSize={25}
             maxSize={55}
             onExpand={() => {
-              expandPanel();
-              setIsSettingsPanelOpen(true);
+              setIsOpen(true);
             }}
             onCollapse={() => {
-              setIsSettingsPanelOpen(false);
+              setIsOpen(false);
             }}
             collapsible
           >

@@ -30,10 +30,10 @@ export default function Custom() {
           placeholder="height"
           {...register("height", { required: true, minLength: 2 })}
         />
-        <Button type="submit" variant="secondary">
-          set
-        </Button>
       </div>
+      <Button type="submit" className="w-full" variant="secondary">
+        set aspect ratio
+      </Button>
     </form>
   );
 }

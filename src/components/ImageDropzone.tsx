@@ -30,10 +30,32 @@ export default function ImageDropzone() {
         setImageUrl(URL.createObjectURL(convertedFile as Blob));
         setProcessing(false);
         break;
-      default:
+      case "image/png":
         setProcessing(true);
         setImageUrl(URL.createObjectURL(acceptedFiles[0] as Blob));
         setProcessing(false);
+        break;
+      case "image/jpeg":
+        setProcessing(true);
+        setImageUrl(URL.createObjectURL(acceptedFiles[0] as Blob));
+        setProcessing(false);
+        break;
+      case "image/webp":
+        setProcessing(true);
+        setImageUrl(URL.createObjectURL(acceptedFiles[0] as Blob));
+        setProcessing(false);
+        break;
+      case "image/avif":
+        setProcessing(true);
+        setImageUrl(URL.createObjectURL(acceptedFiles[0] as Blob));
+        setProcessing(false);
+        break;
+      default:
+        toast({
+          title: "invalid file type",
+          description: `supported file types: ${validImageTypes.join(", ")}`,
+        });
+        break;
     }
   };
 

@@ -2,7 +2,6 @@ import FlavorSelect from "./FlavorSelect";
 import InfoButton from "./InfoButton";
 import ModelSelect from "./ModelSelect";
 import ThemeSwitch from "./ThemeToggle";
-import { Button } from "./ui/button";
 
 export default function SettingsPanel() {
   return (

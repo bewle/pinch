@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { ArrowDownToLine, Image, Maximize, Trash2 } from "lucide-react";
+import { Image, Maximize, Trash2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -11,10 +11,19 @@ import ImportButton from "./ImportButton";
 import { useImageUrlStore } from "@/lib/store/image-file";
 import ImageDropzone from "./ImageDropzone";
 import CropComponent from "./CropComponent";
+import { useIsSettingsPanelOpen } from "@/lib/store/settings-panel";
+import PreviewButton from "./PreviewButton";
+import {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+} from "./ui/context-menu";
 
 export default function CropPanel() {
+  const { isOpen } = useIsSettingsPanelOpen();
   const [shiftHeld, setShiftHeld] = useState(false);
-  const { imageUrl } = useImageUrlStore();
+  const { imageUrl, setImageUrl } = useImageUrlStore();
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -42,11 +51,27 @@ export default function CropPanel() {
     <section className="relative flex h-full flex-col items-center justify-center gap-4">
       <ImageDropzone />
       <LeftButtons shiftHeld={shiftHeld} imageUrl={imageUrl} />
-      {imageUrl ? <RightButtons /> : null}
+      {imageUrl && isOpen ? <RightButtons /> : null}
       {imageUrl ? <BottomRightButtons /> : null}
       {imageUrl ? (
         <div className="my-12 h-full w-full">
-          <CropComponent shiftHeld={shiftHeld} />
+          <ContextMenu>
+            <ContextMenuTrigger>
+              <CropComponent shiftHeld={shiftHeld} />
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+              <ContextMenuItem>import image</ContextMenuItem>
+              <ContextMenuItem
+                onClick={() => {
+                  setImageUrl("");
+                }}
+              >
+                clear image
+              </ContextMenuItem>
+              <ContextMenuItem>preview</ContextMenuItem>
+              <ContextMenuItem>download</ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
         </div>
       ) : (
         <div className="group select-none rounded-lg border-2 border-dotted p-8 opacity-50 transition-opacity hover:cursor-pointer hover:bg-muted/40 hover:opacity-75">
@@ -74,31 +99,24 @@ function LeftButtons({
   return (
     <div className="absolute left-4 top-4 z-10 flex flex-col gap-2 fade-in">
       <ImportButton />
-      {imageUrl ? (
-        <TooltipProvider delayDuration={0}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="outline" size="icon">
-                {shiftHeld ? <ArrowDownToLine /> : <Image />}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="right">
-              <p>{shiftHeld ? "download" : "preview"}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ) : null}
+      {imageUrl ? <PreviewButton shiftHeld={shiftHeld} /> : null}
     </div>
   );
 }
 
 function RightButtons() {
+  const { setIsOpen } = useIsSettingsPanelOpen();
+
   return (
     <div className="absolute right-4 top-4 z-10 flex flex-col gap-2">
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="outline" size="icon">
+            <Button
+              onClick={() => setIsOpen(false)}
+              variant="outline"
+              size="icon"
+            >
               <Maximize />
             </Button>
           </TooltipTrigger>
