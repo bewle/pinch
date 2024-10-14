@@ -39,7 +39,6 @@ const Demo = () => {
           croppedAreaPixels,
           rotation,
         );
-        console.log("donee", { croppedImage });
         setCroppedImage(croppedImage!);
       }
     } catch (e) {

@@ -15,11 +15,12 @@ import { type ImperativePanelHandle } from "react-resizable-panels";
 import MediaQuery from "react-responsive";
 import ImageInputProvider from "@/components/ImageInputProvider";
 import { useViewStore } from "@/lib/store/view";
+import SplitViewPreview from "@/components/SplitViewPreview";
 
 export default function Page() {
   const settingsPanelRef = useRef<ImperativePanelHandle>(null);
   const { isOpen, setIsOpen } = useIsSettingsPanelOpen();
-  const { setView } = useViewStore();
+  const { view, setView } = useViewStore();
   const expandPanel = () => {
     const panel = settingsPanelRef.current;
     if (panel?.isCollapsed()) {
@@ -40,7 +41,6 @@ export default function Page() {
   }
 
   useEffect(() => {
-    console.log(isOpen);
     if (isOpen) {
       expandPanel();
     } else {
@@ -60,11 +60,15 @@ export default function Page() {
       {/* Desktop */}
       <MediaQuery minWidth={1226}>
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel
-            onResize={(size) => console.log(size)}
-            className="relative w-full flex-grow-0"
-          >
-            <CropPanel />
+          <ResizablePanel className="relative w-full flex-grow-0">
+            <div
+              className={`grid h-full w-full ${
+                view === "split" ? "grid-cols-2" : ""
+              }`}
+            >
+              <CropPanel />
+              {view === "split" ? <SplitViewPreview /> : null}
+            </div>
             <ChevronsLeft
               onClick={() => {
                 settingsPanelRef.current?.expand();

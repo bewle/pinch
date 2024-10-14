@@ -25,7 +25,6 @@ export default function PreviewButton({ shiftHeld }: { shiftHeld: boolean }) {
           croppedAreaPixels,
           0,
         );
-        console.log("donee", { croppedImage });
         setCroppedImage(croppedImage!);
       }
     } catch (e) {

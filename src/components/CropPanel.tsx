@@ -116,6 +116,10 @@ function RightButtons() {
   const { setIsOpen } = useIsSettingsPanelOpen();
   const { view, setView } = useViewStore();
 
+  useEffect(() => {
+    console.log(view);
+  }, [view]);
+
   return (
     <div className="absolute right-4 top-4 z-10 flex flex-col gap-2">
       {view !== "fullscreen" ? (

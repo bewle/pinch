@@ -7,12 +7,19 @@ interface CropData {
         width: number;
         height: number;
     };
+    crop: {
+        x: number;
+        y: number;
+    };
+    zoom: number;
     setCroppedAreaPixels: (pixels: {
         x: number;
         y: number;
         width: number;
         height: number;
     }) => void;
+    setCrop: (crop: { x: number; y: number }) => void;
+    setZoom: (zoom: number) => void;
 }
 
 export const useCropDataStore = create<CropData>((set) => ({
@@ -22,5 +29,12 @@ export const useCropDataStore = create<CropData>((set) => ({
         width: 0,
         height: 0,
     },
+    crop: {
+        x: 0,
+        y: 0,
+    },
+    zoom: 1,
     setCroppedAreaPixels: (pixels) => set({ croppedAreaPixels: pixels }),
+    setCrop: (crop) => set({ crop }),
+    setZoom: (zoom) => set({ zoom }),
 }));

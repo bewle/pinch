@@ -1,15 +1,15 @@
 import { useCropDataStore } from "@/lib/store/crop-data";
 import { useFlavorStore } from "@/lib/store/flavor";
 import { useImageUrlStore } from "@/lib/store/image-file";
-import { useState } from "react";
+import { useViewStore } from "@/lib/store/view";
 import Cropper, { type Area } from "react-easy-crop";
 
 export default function CropComponent({ shiftHeld }: { shiftHeld: boolean }) {
   const { width, height } = useFlavorStore();
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const { setCroppedAreaPixels } = useCropDataStore();
+  const { zoom, setZoom } = useCropDataStore();
+  const { setCroppedAreaPixels, setCrop, crop } = useCropDataStore();
   const { imageUrl } = useImageUrlStore();
+  const { view } = useViewStore();
 
   const onCropComplete = (
     croppedArea: Area,
@@ -18,13 +18,22 @@ export default function CropComponent({ shiftHeld }: { shiftHeld: boolean }) {
     setCroppedAreaPixels(croppedAreaPixels);
   };
 
+  const onCropAreaChange = (cropArea: Area) => {
+    if (view === "split") {
+      setCroppedAreaPixels(cropArea);
+    }
+  };
+
   return (
     <Cropper
       image={imageUrl}
       crop={crop}
       zoom={zoom}
       aspect={width / height}
-      onCropChange={setCrop}
+      onCropChange={(crop) => {
+        setCrop(crop);
+      }}
+      onCropAreaChange={onCropAreaChange}
       onCropComplete={onCropComplete}
       onZoomChange={setZoom}
       zoomSpeed={shiftHeld ? 0.25 : 0.05}
