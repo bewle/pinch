@@ -24,7 +24,6 @@ import { useViewStore } from "@/lib/store/view";
 
 export default function CropPanel() {
   const { setIsOpen } = useInputWindowStore();
-  const { isOpen } = useIsSettingsPanelOpen();
   const [shiftHeld, setShiftHeld] = useState(false);
   const { imageUrl, setImageUrl } = useImageUrlStore();
 
@@ -55,7 +54,7 @@ export default function CropPanel() {
       <ImageDropzone />
       <LeftButtons shiftHeld={shiftHeld} imageUrl={imageUrl} />
       <BottomLeftText />
-      {imageUrl && <RightButtons isOpen={isOpen} />}
+      {imageUrl && <RightButtons />}
       {imageUrl && <BottomRightButtons />}
       {imageUrl ? (
         <ContextMenu>
@@ -113,13 +112,13 @@ function LeftButtons({
   );
 }
 
-function RightButtons({ isOpen }: { isOpen: boolean }) {
+function RightButtons() {
   const { setIsOpen } = useIsSettingsPanelOpen();
   const { view, setView } = useViewStore();
 
   return (
     <div className="absolute right-4 top-4 z-10 flex flex-col gap-2">
-      {view === "split" ? (
+      {view !== "fullscreen" ? (
         <TooltipProvider delayDuration={0}>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -140,7 +139,7 @@ function RightButtons({ isOpen }: { isOpen: boolean }) {
           </Tooltip>
         </TooltipProvider>
       ) : null}
-      {view === "fullscreen" && isOpen ? (
+      {view !== "split" ? (
         <TooltipProvider delayDuration={0}>
           <Tooltip>
             <TooltipTrigger asChild>
