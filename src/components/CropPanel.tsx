@@ -191,7 +191,7 @@ function BottomRightButtons() {
 
 function BottomLeftText() {
   return (
-    <div className="absolute bottom-4 left-4 flex flex-col text-xs opacity-80">
+    <div className="absolute bottom-4 left-4 flex flex-col text-xs opacity-60">
       <p>v0.01</p>
       <p>made with ❤️</p>
     </div>

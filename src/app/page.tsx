@@ -14,11 +14,12 @@ import { useEffect, useRef } from "react";
 import { type ImperativePanelHandle } from "react-resizable-panels";
 import MediaQuery from "react-responsive";
 import ImageInputProvider from "@/components/ImageInputProvider";
+import { useViewStore } from "@/lib/store/view";
 
 export default function Page() {
   const settingsPanelRef = useRef<ImperativePanelHandle>(null);
   const { isOpen, setIsOpen } = useIsSettingsPanelOpen();
-
+  const { setView } = useViewStore();
   const expandPanel = () => {
     const panel = settingsPanelRef.current;
     if (panel?.isCollapsed()) {
@@ -68,6 +69,7 @@ export default function Page() {
               onClick={() => {
                 settingsPanelRef.current?.expand();
                 setIsOpen(true);
+                setView("");
               }}
               size={32}
               className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer opacity-50 transition-all hover:-translate-x-2 hover:opacity-100"
@@ -89,6 +91,7 @@ export default function Page() {
             }}
             onCollapse={() => {
               setIsOpen(false);
+              setView("fullscreen");
             }}
             collapsible
           >
