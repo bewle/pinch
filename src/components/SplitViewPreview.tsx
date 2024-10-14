@@ -7,7 +7,7 @@ export default function SplitViewPreview() {
   const { croppedAreaPixels } = useCropDataStore();
   return (
     <div className="grid h-full w-full place-items-center">
-      <div className="h-full w-full">
+      <div className="flex h-full w-full items-center justify-center">
         <Output croppedArea={croppedAreaPixels} />
       </div>
     </div>
@@ -39,10 +39,19 @@ const Output = ({
 
   return (
     <div
-      className="max-w-[500px]"
-      style={{ paddingBottom: `${100 / (width / height)}%` }}
+      className="relative grid place-items-center overflow-hidden"
+      style={{
+        // paddingBottom: `${100 / (width / height)}%`,
+        width: width,
+      }}
     >
       <img src={imageUrl} alt="" style={imageStyle} />
     </div>
+    // <div
+    //   className="max-w-[500px]"
+    //   style={{ paddingBottom: `${100 / (width / height)}%` }}
+    // >
+    //   <img src={imageUrl} alt="" style={imageStyle} className="max-w-[200]" />
+    // </div>
   );
 };

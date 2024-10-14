@@ -61,13 +61,13 @@ export default function Page() {
       <MediaQuery minWidth={1226}>
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel className="relative w-full flex-grow-0">
-            <div
-              className={`grid h-full w-full ${
-                view === "split" ? "grid-cols-2" : ""
-              }`}
-            >
-              <CropPanel />
-              {view === "split" ? <SplitViewPreview /> : null}
+            <div className="flex h-full w-full justify-between">
+              <div className={view === "split" ? "w-[50vw]" : "w-full"}>
+                <CropPanel />
+              </div>
+              <div className="w-[50vw]">
+                {view === "split" ? <SplitViewPreview /> : null}
+              </div>
             </div>
             <ChevronsLeft
               onClick={() => {
