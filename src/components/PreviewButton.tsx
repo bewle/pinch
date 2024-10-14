@@ -1,6 +1,4 @@
-import "html5-device-mockups/dist/device-mockups.min.css";
-import { IPhoneX } from "react-device-mockups";
-import { ArrowDownToLine, Image } from "lucide-react";
+import { ArrowDownToLine, Image as ImageIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   TooltipProvider,
@@ -8,42 +6,40 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "./ui/tooltip";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "./ui/alert-dialog";
-import { useState } from "react";
-import { useFlavorStore } from "@/lib/store/flavor";
+import { useCroppedImageStore } from "@/lib/store/cropped-image";
+import { useCropDataStore } from "@/lib/store/crop-data";
+import getCroppedImg from "@/lib/handle-crop";
 import { useImageUrlStore } from "@/lib/store/image-file";
-import IPhone11 from "./mockups/iphone-11";
+import ImgDialog from "@/app/test/ImgDialog";
 
 export default function PreviewButton({ shiftHeld }: { shiftHeld: boolean }) {
-  const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
-  const { height, width } = useFlavorStore();
+  const { croppedAreaPixels } = useCropDataStore();
+  const { croppedImage, setCroppedImage } = useCroppedImageStore();
   const { imageUrl } = useImageUrlStore();
+
+  const showCroppedImage = async () => {
+    try {
+      if (croppedAreaPixels) {
+        const croppedImage = await getCroppedImg(
+          imageUrl,
+          croppedAreaPixels,
+          0,
+        );
+        console.log("donee", { croppedImage });
+        setCroppedImage(croppedImage!);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const onClose = () => {
+    setCroppedImage("");
+  };
 
   return (
     <>
-      <AlertDialog open={previewDialogOpen} onOpenChange={setPreviewDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>preview</AlertDialogTitle>
-            <AlertDialogDescription className="flex items-center justify-between">
-              <IPhone11 height={height / 1.4} width={width} />
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Continue</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <ImgDialog img={croppedImage} onClose={onClose} />
 
       <TooltipProvider delayDuration={0}>
         <Tooltip>
@@ -53,12 +49,8 @@ export default function PreviewButton({ shiftHeld }: { shiftHeld: boolean }) {
                 <ArrowDownToLine />
               </Button>
             ) : (
-              <Button
-                onClick={() => setPreviewDialogOpen(true)}
-                variant="outline"
-                size="icon"
-              >
-                <Image />
+              <Button onClick={showCroppedImage} variant="outline" size="icon">
+                <ImageIcon />
               </Button>
             )}
           </TooltipTrigger>

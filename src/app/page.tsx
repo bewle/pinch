@@ -13,6 +13,7 @@ import { ChevronsLeft } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { type ImperativePanelHandle } from "react-resizable-panels";
 import MediaQuery from "react-responsive";
+import ImageInputProvider from "@/components/ImageInputProvider";
 
 export default function Page() {
   const settingsPanelRef = useRef<ImperativePanelHandle>(null);
@@ -51,9 +52,10 @@ export default function Page() {
       onContextMenu={(e) => {
         e.preventDefault();
       }}
-      className="motion-preset-fade-lg grid h-screen place-items-center"
+      className="motion-preset-fade-lg h-screen"
     >
       <ProcessingAlert />
+      <ImageInputProvider />
       {/* Desktop */}
       <MediaQuery minWidth={1226}>
         <ResizablePanelGroup direction="horizontal">

@@ -5,12 +5,14 @@ import { useToast } from "@/hooks/use-toast";
 import { validImageTypes } from "@/lib/validImageTypes";
 import { convertHeicToPng } from "@/lib/handleFileType";
 import { useProcessingStore } from "@/lib/store/processing";
+import { useInputWindowStore } from "@/lib/store/input-window";
 
 export default function ImageDropzone() {
   const [dragging, setDragging] = useState(false);
   const { setProcessing } = useProcessingStore();
   const { toast } = useToast();
   const { setImageUrl } = useImageUrlStore();
+  const { setIsOpen } = useInputWindowStore();
 
   const handleDrop = async (acceptedFiles: File[]) => {
     setDragging(false);

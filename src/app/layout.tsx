@@ -20,7 +20,7 @@ export default function RootLayout({
       lang="en"
       className={`${GeistSans.variable}`}
     >
-      <body className="debug-screens">
+      <body>
         <Providers>{children}</Providers>
         <Toaster />
       </body>
