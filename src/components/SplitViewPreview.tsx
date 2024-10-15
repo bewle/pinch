@@ -42,16 +42,18 @@ const Output = ({
   };
 
   return (
-    <div
-      className="relative w-[300] overflow-hidden"
-      style={{ paddingBottom: `${100 / (width / height)}%` }}
-    >
-      <img
-        className="absolute left-0 top-0 origin-top-left"
-        src={imageUrl}
-        alt=""
-        style={imageStyle}
-      />
+    <div className="grid h-screen place-items-center">
+      <div
+        className="relative h-fit w-[300] overflow-hidden"
+        style={{ paddingBottom: `${100 / (width / height)}%` }}
+      >
+        <img
+          className="absolute left-0 top-0 origin-top-left"
+          src={imageUrl}
+          alt=""
+          style={imageStyle}
+        />
+      </div>
     </div>
   );
 };

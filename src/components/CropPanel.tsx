@@ -60,9 +60,7 @@ export default function CropPanel() {
       {imageUrl ? (
         <ContextMenu>
           <ContextMenuTrigger>
-            <div className="grid min-h-screen place-items-center">
-              <CropComponent shiftHeld={shiftHeld} />
-            </div>
+            <CropComponent shiftHeld={shiftHeld} />
           </ContextMenuTrigger>
           <ContextMenuContent>
             <ContextMenuItem>import image</ContextMenuItem>

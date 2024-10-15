@@ -9,7 +9,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { ChevronsLeft } from "lucide-react";
+import { ChevronsLeft, Split } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { type ImperativePanelHandle } from "react-resizable-panels";
 import MediaQuery from "react-responsive";
@@ -21,10 +21,12 @@ export default function Page() {
   const settingsPanelRef = useRef<ImperativePanelHandle>(null);
   const { isOpen, setIsOpen } = useIsSettingsPanelOpen();
   const { view, setView } = useViewStore();
-  const expandPanel = () => {
+
+  const expandPanel = (size = 30) => {
     const panel = settingsPanelRef.current;
+
     if (panel?.isCollapsed()) {
-      panel.expand();
+      panel.expand(size);
     }
   };
 
@@ -48,6 +50,12 @@ export default function Page() {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    if (view === "split") {
+      expandPanel(50);
+    }
+  }, [view]);
+
   return (
     <main
       onContextMenu={(e) => {
@@ -61,11 +69,7 @@ export default function Page() {
       <MediaQuery minWidth={1226}>
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel className="relative w-full flex-grow-0">
-            <div
-              className={`h-full w-full ${
-                view === "split" ? "grid grid-cols-2" : ""
-              }`}
-            >
+            <div className="h-full w-full">
               <CropPanel />
               {view === "split" ? <SplitViewPreview /> : null}
             </div>
@@ -83,7 +87,7 @@ export default function Page() {
             />
           </ResizablePanel>
           <ResizableHandle
-            withHandle={isOpen}
+            withHandle={isOpen && view !== "split"}
             onDoubleClick={handleDoubleClick}
           />
           <ResizablePanel
@@ -95,11 +99,13 @@ export default function Page() {
             }}
             onCollapse={() => {
               setIsOpen(false);
-              setView("fullscreen");
+              if (view === "") {
+                setView("fullscreen");
+              }
             }}
             collapsible
           >
-            <SettingsPanel />
+            {view === "split" ? <SplitViewPreview /> : <SettingsPanel />}
           </ResizablePanel>
         </ResizablePanelGroup>
       </MediaQuery>
