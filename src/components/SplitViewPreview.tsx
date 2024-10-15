@@ -3,11 +3,11 @@ import { useFlavorStore } from "@/lib/store/flavor";
 import { useImageUrlStore } from "@/lib/store/image-file";
 
 export default function SplitViewPreview() {
-  const { croppedAreaPixels } = useCropDataStore();
+  const { previewArea } = useCropDataStore();
   return (
     <div className="grid h-full w-full place-items-center">
       <div className="flex h-full w-full items-center justify-center">
-        <Output croppedArea={croppedAreaPixels} />
+        <Output croppedArea={previewArea} />
       </div>
     </div>
   );

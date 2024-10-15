@@ -7,7 +7,8 @@ import Cropper, { type Area } from "react-easy-crop";
 export default function CropComponent({ shiftHeld }: { shiftHeld: boolean }) {
   const { width, height } = useFlavorStore();
   const { zoom, setZoom } = useCropDataStore();
-  const { setCroppedAreaPixels, setCrop, crop } = useCropDataStore();
+  const { setCroppedAreaPixels, setPreviewArea, setCrop, crop } =
+    useCropDataStore();
   const { imageUrl } = useImageUrlStore();
   const { view } = useViewStore();
 
@@ -15,12 +16,13 @@ export default function CropComponent({ shiftHeld }: { shiftHeld: boolean }) {
     croppedArea: Area,
     croppedAreaPixels: { x: number; y: number; width: number; height: number },
   ) => {
+    console.log(croppedAreaPixels);
     setCroppedAreaPixels(croppedAreaPixels);
   };
 
   const onCropAreaChange = (cropArea: Area) => {
     if (view === "split") {
-      setCroppedAreaPixels(cropArea);
+      setPreviewArea(cropArea);
     }
   };
 
