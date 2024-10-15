@@ -24,6 +24,7 @@ import { useViewStore } from "@/lib/store/view";
 
 export default function CropPanel() {
   const { setIsOpen } = useInputWindowStore();
+  const { setView } = useViewStore();
   const [shiftHeld, setShiftHeld] = useState(false);
   const { imageUrl, setImageUrl } = useImageUrlStore();
 
@@ -67,6 +68,7 @@ export default function CropPanel() {
             <ContextMenuItem>import image</ContextMenuItem>
             <ContextMenuItem
               onClick={() => {
+                setView("fullscreen");
                 setImageUrl("");
               }}
             >
@@ -170,6 +172,7 @@ function RightButtons() {
 
 function BottomRightButtons() {
   const { setImageUrl } = useImageUrlStore();
+  const { setView } = useViewStore();
 
   return (
     <div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
@@ -177,7 +180,10 @@ function BottomRightButtons() {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              onClick={() => setImageUrl("")}
+              onClick={() => {
+                setView("");
+                setImageUrl("");
+              }}
               variant="outline"
               size="icon"
             >

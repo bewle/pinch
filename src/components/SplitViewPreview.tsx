@@ -1,7 +1,6 @@
 import { useCropDataStore } from "@/lib/store/crop-data";
 import { useFlavorStore } from "@/lib/store/flavor";
 import { useImageUrlStore } from "@/lib/store/image-file";
-import Image from "next/image";
 
 export default function SplitViewPreview() {
   const { croppedAreaPixels } = useCropDataStore();
@@ -17,12 +16,15 @@ export default function SplitViewPreview() {
 const Output = ({
   croppedArea,
 }: {
-  croppedArea: { x: number; y: number; width: number; height: number };
+  croppedArea: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
 }) => {
-  const { width } = useFlavorStore();
   const { imageUrl } = useImageUrlStore();
-
-  console.log(croppedArea);
+  const { width, height } = useFlavorStore();
 
   const scale = 100 / croppedArea.width;
   const transform = {
@@ -41,19 +43,15 @@ const Output = ({
 
   return (
     <div
-      className="relative grid place-items-center overflow-hidden"
-      style={{
-        // paddingBottom: `${100 / (width / height)}%`,
-        width: width,
-      }}
+      className="relative w-[300] overflow-hidden"
+      style={{ paddingBottom: `${100 / (width / height)}%` }}
     >
-      <img src={imageUrl} alt="" style={imageStyle} />
+      <img
+        className="absolute left-0 top-0 origin-top-left"
+        src={imageUrl}
+        alt=""
+        style={imageStyle}
+      />
     </div>
-    // <div
-    //   className="max-w-[500px]"
-    //   style={{ paddingBottom: `${100 / (width / height)}%` }}
-    // >
-    //   <img src={imageUrl} alt="" style={imageStyle} className="max-w-[200]" />
-    // </div>
   );
 };
