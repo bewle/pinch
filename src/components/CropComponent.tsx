@@ -20,7 +20,6 @@ export default function CropComponent({ shiftHeld }: { shiftHeld: boolean }) {
     croppedArea: Area,
     croppedAreaPixels: { x: number; y: number; width: number; height: number },
   ) => {
-    console.log(croppedAreaPixels);
     setCroppedAreaPixels(croppedAreaPixels);
   };
 
@@ -46,9 +45,6 @@ export default function CropComponent({ shiftHeld }: { shiftHeld: boolean }) {
         onCropComplete={onCropComplete}
         onZoomChange={setZoom}
         zoomSpeed={shiftHeld ? 0.25 : 0.05}
-        onMediaLoaded={() =>
-          console.log("loaded", cropper.current?.getObjectFit())
-        }
       />
     </>
   );

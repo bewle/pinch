@@ -9,7 +9,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { ChevronsLeft, Split } from "lucide-react";
+import { ChevronsLeft } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { type ImperativePanelHandle } from "react-resizable-panels";
 import MediaQuery from "react-responsive";
@@ -17,8 +17,11 @@ import ImageInputProvider from "@/components/ImageInputProvider";
 import { useViewStore } from "@/lib/store/view";
 import SplitViewPreview from "@/components/SplitViewPreview";
 
+let lastView = "";
+
 export default function Page() {
   const settingsPanelRef = useRef<ImperativePanelHandle>(null);
+
   const { isOpen, setIsOpen } = useIsSettingsPanelOpen();
   const { view, setView } = useViewStore();
 
@@ -83,12 +86,11 @@ export default function Page() {
               <CropPanel />
               {view === "split" ? <SplitViewPreview /> : null}
             </div>
-            {view === "fullscreen" || view === "split" ? (
+            {!isOpen ? (
               <ChevronsLeft
                 onClick={() => {
                   settingsPanelRef.current?.expand();
                   setIsOpen(true);
-                  setView("settings");
                 }}
                 size={32}
                 className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer opacity-50 transition-all hover:-translate-x-2 hover:opacity-100"
@@ -96,7 +98,7 @@ export default function Page() {
             ) : null}
           </ResizablePanel>
           <ResizableHandle
-            withHandle={view !== "fullscreen" && view === "split"}
+            withHandle={isOpen}
             onDoubleClick={handleDoubleClick}
           />
           <ResizablePanel
@@ -111,6 +113,7 @@ export default function Page() {
               if (view === "settings") {
                 setView("fullscreen");
               }
+              lastView = view;
             }}
             collapsible
           >

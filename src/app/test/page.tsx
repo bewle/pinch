@@ -10,7 +10,6 @@ const Output = ({
   croppedArea: { x: number; y: number; width: number; height: number };
 }) => {
   const { width, height } = useFlavorStore();
-  console.log(croppedArea);
 
   const scale = 100 / croppedArea.width;
   const transform = {

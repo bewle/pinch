@@ -19,7 +19,6 @@ export default function PreviewButton({ shiftHeld }: { shiftHeld: boolean }) {
 
   const showCroppedImage = async () => {
     try {
-      console.log(croppedAreaPixels);
       const croppedImage = await getCroppedImg(imageUrl, croppedAreaPixels, 0);
       setCroppedImage(croppedImage!);
     } catch (e) {
