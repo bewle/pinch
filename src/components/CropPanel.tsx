@@ -77,13 +77,13 @@ export default function CropPanel() {
           </ContextMenuContent>
         </ContextMenu>
       ) : (
-        <div className="group select-none rounded-lg border-2 border-dotted p-8 opacity-50 transition-opacity hover:cursor-pointer hover:bg-muted/40 hover:opacity-75">
-          <div
-            onClick={() => {
-              setIsOpen(true);
-            }}
-            className="flex flex-col items-center gap-4 transition-transform group-hover:scale-[102%]"
-          >
+        <Button
+          onClick={() => {
+            setIsOpen(true);
+          }}
+          className="group size-64 select-none rounded-lg border-2 border-dotted bg-transparent p-8 opacity-50 transition-opacity hover:cursor-pointer hover:bg-muted/40 hover:opacity-75"
+        >
+          <div className="flex flex-col items-center gap-4 text-foreground transition-transform group-hover:scale-[102%]">
             {/* eslint-disable-next-line jsx-a11y/alt-text */}
             <Image size={64} />
             <div className="flex flex-col items-center gap-2">
@@ -91,7 +91,7 @@ export default function CropPanel() {
               <p>paste, drag, or click/tap</p>
             </div>
           </div>
-        </div>
+        </Button>
       )}
     </section>
   );
@@ -221,10 +221,14 @@ function BottomRightButtons() {
 }
 
 function BottomLeftText() {
+  const { imageUrl } = useImageUrlStore();
+
   return (
-    <div className="absolute bottom-4 left-4 flex flex-col text-xs opacity-60">
-      <p>v0.01</p>
-      <p>made with ❤️</p>
-    </div>
+    !imageUrl && (
+      <div className="absolute bottom-4 left-4 flex flex-col text-xs opacity-60">
+        <p>v0.01</p>
+        <p>made with ❤️</p>
+      </div>
+    )
   );
 }

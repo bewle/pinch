@@ -2,8 +2,10 @@ import { useCropDataStore } from "@/lib/store/crop-data";
 import { useFlavorStore } from "@/lib/store/flavor";
 import { useImageUrlStore } from "@/lib/store/image-file";
 import { useViewStore } from "@/lib/store/view";
+import { LoaderCircle } from "lucide-react";
 import { useRef } from "react";
-import Cropper, { type Area } from "react-easy-crop";
+import Cropper from "react-easy-crop";
+import { type Area } from "react-easy-crop";
 
 export default function CropComponent({ shiftHeld }: { shiftHeld: boolean }) {
   const cropper = useRef<Cropper>(null);
@@ -29,22 +31,25 @@ export default function CropComponent({ shiftHeld }: { shiftHeld: boolean }) {
   };
 
   return (
-    <Cropper
-      ref={cropper}
-      image={imageUrl}
-      crop={crop}
-      zoom={zoom}
-      aspect={width / height}
-      onCropChange={(crop) => {
-        setCrop(crop);
-      }}
-      onCropAreaChange={onCropAreaChange}
-      onCropComplete={onCropComplete}
-      onZoomChange={setZoom}
-      zoomSpeed={shiftHeld ? 0.25 : 0.05}
-      onMediaLoaded={() =>
-        console.log("loaded", cropper.current?.getObjectFit())
-      }
-    />
+    <>
+      <LoaderCircle size={64} className="animate-spin" />
+      <Cropper
+        ref={cropper}
+        image={imageUrl}
+        crop={crop}
+        zoom={zoom}
+        aspect={width / height}
+        onCropChange={(crop) => {
+          setCrop(crop);
+        }}
+        onCropAreaChange={onCropAreaChange}
+        onCropComplete={onCropComplete}
+        onZoomChange={setZoom}
+        zoomSpeed={shiftHeld ? 0.25 : 0.05}
+        onMediaLoaded={() =>
+          console.log("loaded", cropper.current?.getObjectFit())
+        }
+      />
+    </>
   );
 }

@@ -22,11 +22,6 @@ export default function SettingsPanel() {
       <div className="relative overflow-y-auto">
         <ModelSelect />
       </div>
-
-      {/* <div className="flex gap-2">
-        <Button className="flex-grow">preview</Button>
-        <Button className="flex-grow">import</Button>
-      </div> */}
     </section>
   );
 }

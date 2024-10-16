@@ -83,7 +83,7 @@ export default function Page() {
               <CropPanel />
               {view === "split" ? <SplitViewPreview /> : null}
             </div>
-            {view === "fullscreen" ? (
+            {view === "fullscreen" || view === "split" ? (
               <ChevronsLeft
                 onClick={() => {
                   settingsPanelRef.current?.expand();
@@ -96,7 +96,7 @@ export default function Page() {
             ) : null}
           </ResizablePanel>
           <ResizableHandle
-            withHandle={view !== "fullscreen"}
+            withHandle={view !== "fullscreen" && view === "split"}
             onDoubleClick={handleDoubleClick}
           />
           <ResizablePanel
@@ -112,7 +112,7 @@ export default function Page() {
                 setView("fullscreen");
               }
             }}
-            collapsible={view !== "split"}
+            collapsible
           >
             {view === "split" ? <SplitViewPreview /> : <SettingsPanel />}
           </ResizablePanel>
