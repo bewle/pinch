@@ -170,7 +170,7 @@ function RightButtons() {
 
 function BottomRightButtons() {
   const { setImageUrl } = useImageUrlStore();
-  const { setView } = useViewStore();
+  const { view, setView } = useViewStore();
 
   return (
     <div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
@@ -179,7 +179,9 @@ function BottomRightButtons() {
           <TooltipTrigger asChild>
             <Button
               onClick={() => {
-                setView("");
+                if (view === "split") {
+                  setView("fullscreen");
+                }
                 setImageUrl("");
               }}
               variant="outline"
