@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { Columns2, Image, Maximize, Trash2 } from "lucide-react";
+import { Cog, Columns2, Image, Maximize, Trash2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -160,6 +160,27 @@ function RightButtons() {
             </TooltipTrigger>
             <TooltipContent side="left">
               <p>split view</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ) : null}
+      {view !== "settings" ? (
+        <TooltipProvider delayDuration={0}>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={() => {
+                  setIsOpen(false);
+                  setView("settings");
+                }}
+                variant="outline"
+                size="icon"
+              >
+                <Cog />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="left">
+              <p>settings</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

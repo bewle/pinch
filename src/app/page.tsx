@@ -51,8 +51,18 @@ export default function Page() {
   }, [isOpen]);
 
   useEffect(() => {
-    if (view === "split") {
-      expandPanel(50);
+    switch (view) {
+      case "split":
+        expandPanel(50);
+        break;
+      case "fullscreen":
+        collapsePanel();
+        break;
+      case "settings":
+        expandPanel();
+        break;
+      default:
+        break;
     }
   }, [view]);
 
@@ -73,21 +83,20 @@ export default function Page() {
               <CropPanel />
               {view === "split" ? <SplitViewPreview /> : null}
             </div>
-            <ChevronsLeft
-              onClick={() => {
-                settingsPanelRef.current?.expand();
-                setIsOpen(true);
-                setView("");
-              }}
-              size={32}
-              className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer opacity-50 transition-all hover:-translate-x-2 hover:opacity-100"
-              style={{
-                display: isOpen ? "none" : "block",
-              }}
-            />
+            {view === "fullscreen" ? (
+              <ChevronsLeft
+                onClick={() => {
+                  settingsPanelRef.current?.expand();
+                  setIsOpen(true);
+                  setView("settings");
+                }}
+                size={32}
+                className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer opacity-50 transition-all hover:-translate-x-2 hover:opacity-100"
+              />
+            ) : null}
           </ResizablePanel>
           <ResizableHandle
-            withHandle={isOpen && view !== "split"}
+            withHandle={view !== "fullscreen"}
             onDoubleClick={handleDoubleClick}
           />
           <ResizablePanel
@@ -99,11 +108,11 @@ export default function Page() {
             }}
             onCollapse={() => {
               setIsOpen(false);
-              if (view === "") {
+              if (view === "settings") {
                 setView("fullscreen");
               }
             }}
-            collapsible
+            collapsible={view !== "split"}
           >
             {view === "split" ? <SplitViewPreview /> : <SettingsPanel />}
           </ResizablePanel>

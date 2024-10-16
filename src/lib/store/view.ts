@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 interface ViewState {
-    view: "fullscreen" | "split" | "";
-    setView: (view: "fullscreen" | "split" | "") => void;
+    view: "fullscreen" | "split" | "settings";
+    setView: (view: "fullscreen" | "split" | "settings") => void;
 }
 
 export const useViewStore = create<ViewState>((set) => ({
-    view: "",
+    view: "settings",
     setView: (view) => set({ view }),
 }));
