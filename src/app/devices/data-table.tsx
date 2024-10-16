@@ -20,7 +20,6 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useFlavorStore } from "@/lib/store/flavor";
 import { type Device } from "@/lib/server/getDevices";
 import { Label } from "@/components/ui/label";

@@ -16,8 +16,9 @@ import MediaQuery from "react-responsive";
 import ImageInputProvider from "@/components/ImageInputProvider";
 import { useViewStore } from "@/lib/store/view";
 import SplitViewPreview from "@/components/SplitViewPreview";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-let lastView = "";
+const queryClient = new QueryClient();
 
 export default function Page() {
   const settingsPanelRef = useRef<ImperativePanelHandle>(null);
@@ -70,61 +71,63 @@ export default function Page() {
   }, [view]);
 
   return (
-    <main
-      onContextMenu={(e) => {
-        e.preventDefault();
-      }}
-      className="motion-preset-fade-lg h-screen"
-    >
-      <ProcessingAlert />
-      <ImageInputProvider />
-      {/* Desktop */}
-      <MediaQuery minWidth={1226}>
-        <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel className="relative w-full flex-grow-0">
-            <div className="h-full w-full">
-              <CropPanel />
-              {view === "split" ? <SplitViewPreview /> : null}
-            </div>
-            {!isOpen ? (
-              <ChevronsLeft
-                onClick={() => {
-                  settingsPanelRef.current?.expand();
-                  setIsOpen(true);
-                }}
-                size={32}
-                className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer opacity-50 transition-all hover:-translate-x-2 hover:opacity-100"
-              />
-            ) : null}
-          </ResizablePanel>
-          <ResizableHandle
-            withHandle={isOpen}
-            onDoubleClick={handleDoubleClick}
-          />
-          <ResizablePanel
-            ref={settingsPanelRef}
-            minSize={25}
-            maxSize={55}
-            onExpand={() => {
-              setIsOpen(true);
-            }}
-            onCollapse={() => {
-              setIsOpen(false);
-              if (view === "settings") {
-                setView("fullscreen");
-              }
-              lastView = view;
-            }}
-            collapsible
-          >
-            {view === "split" ? <SplitViewPreview /> : <SettingsPanel />}
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </MediaQuery>
-      {/* Mobile */}
-      <MediaQuery maxWidth={1226}>
-        <SettingsPanelMobile />
-      </MediaQuery>
-    </main>
+    <QueryClientProvider client={queryClient}>
+      <main
+        onContextMenu={(e) => {
+          e.preventDefault();
+        }}
+        className="motion-preset-fade-lg h-screen"
+      >
+        <ProcessingAlert />
+        <ImageInputProvider />
+        {/* Desktop */}
+        <MediaQuery minWidth={1226}>
+          <ResizablePanelGroup direction="horizontal">
+            <ResizablePanel className="relative w-full flex-grow-0">
+              <div className="h-full w-full">
+                <CropPanel />
+                {view === "split" ? <SplitViewPreview /> : null}
+              </div>
+              {!isOpen ? (
+                <ChevronsLeft
+                  onClick={() => {
+                    settingsPanelRef.current?.expand();
+                    setIsOpen(true);
+                  }}
+                  size={32}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer opacity-50 transition-all hover:-translate-x-2 hover:opacity-100"
+                />
+              ) : null}
+            </ResizablePanel>
+            <ResizableHandle
+              withHandle={isOpen}
+              onDoubleClick={handleDoubleClick}
+            />
+            <ResizablePanel
+              ref={settingsPanelRef}
+              minSize={25}
+              maxSize={55}
+              onExpand={() => {
+                setIsOpen(true);
+              }}
+              onCollapse={() => {
+                setIsOpen(false);
+                if (view === "settings") {
+                  setView("fullscreen");
+                }
+                // lastView = view;
+              }}
+              collapsible
+            >
+              {view === "split" ? <SplitViewPreview /> : <SettingsPanel />}
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </MediaQuery>
+        {/* Mobile */}
+        <MediaQuery maxWidth={1226}>
+          <SettingsPanelMobile />
+        </MediaQuery>
+      </main>
+    </QueryClientProvider>
   );
 }
