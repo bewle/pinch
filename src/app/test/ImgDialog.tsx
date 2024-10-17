@@ -13,7 +13,7 @@ const ImgDialog = ({ img, onClose }: { img: string; onClose: () => void }) => {
   return (
     <AlertDialog open={!!img} onOpenChange={onClose}>
       <AlertDialogContent className="sm:max-w-[425px]">
-        <AlertDialogHeader>
+        <AlertDialogHeader className="flex flex-row items-center justify-between">
           <AlertDialogTitle>result</AlertDialogTitle>
           <Button
             variant="ghost"
