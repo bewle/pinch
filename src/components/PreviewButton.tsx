@@ -48,7 +48,7 @@ export default function PreviewButton({ shiftHeld }: { shiftHeld: boolean }) {
             )}
           </TooltipTrigger>
           <TooltipContent side="right">
-            <p>{shiftHeld ? "download" : "preview"}</p>
+            <p>{shiftHeld ? "export" : "preview"}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

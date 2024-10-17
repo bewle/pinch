@@ -21,6 +21,7 @@ import {
 } from "./ui/context-menu";
 import { useInputWindowStore } from "@/lib/store/input-window";
 import { useViewStore } from "@/lib/store/view";
+import ContextMenuProvider from "./ContextMenuProvider";
 
 export default function CropPanel() {
   const { setIsOpen } = useInputWindowStore();
@@ -58,40 +59,31 @@ export default function CropPanel() {
       {imageUrl && <RightButtons />}
       {imageUrl && <BottomRightButtons />}
       {imageUrl ? (
-        <ContextMenu>
-          <ContextMenuTrigger>
-            <CropComponent shiftHeld={shiftHeld} />
-          </ContextMenuTrigger>
-          <ContextMenuContent>
-            <ContextMenuItem>import image</ContextMenuItem>
-            <ContextMenuItem
-              onClick={() => {
-                setView("fullscreen");
-                setImageUrl("");
-              }}
-            >
-              clear image
-            </ContextMenuItem>
-            <ContextMenuItem>preview</ContextMenuItem>
-            <ContextMenuItem>download</ContextMenuItem>
-          </ContextMenuContent>
-        </ContextMenu>
+        <ContextMenuProvider>
+          <CropComponent shiftHeld={shiftHeld} />
+        </ContextMenuProvider>
       ) : (
-        <Button
-          onClick={() => {
-            setIsOpen(true);
-          }}
-          className="group size-64 select-none rounded-lg border-2 border-dotted bg-transparent p-8 opacity-50 transition-opacity hover:cursor-pointer hover:bg-muted/40 hover:opacity-75"
+        <ContextMenuProvider
+          hasClear={false}
+          hasPreview={false}
+          hasExport={false}
         >
-          <div className="flex flex-col items-center gap-4 text-foreground transition-transform group-hover:scale-[102%]">
-            {/* eslint-disable-next-line jsx-a11y/alt-text */}
-            <Image size={64} />
-            <div className="flex flex-col items-center gap-2">
-              <p>choose an image</p>
-              <p>paste, drag, or click/tap</p>
+          <Button
+            onClick={() => {
+              setIsOpen(true);
+            }}
+            className="group size-64 select-none rounded-lg border-2 border-dotted bg-transparent p-8 opacity-50 transition-opacity hover:cursor-pointer hover:bg-muted/40 hover:opacity-75"
+          >
+            <div className="flex flex-col items-center gap-4 text-foreground transition-transform group-hover:scale-[102%]">
+              {/* eslint-disable-next-line jsx-a11y/alt-text */}
+              <Image size={64} />
+              <div className="flex flex-col items-center gap-2">
+                <p>choose an image</p>
+                <p>paste, drag, or click/tap</p>
+              </div>
             </div>
-          </div>
-        </Button>
+          </Button>
+        </ContextMenuProvider>
       )}
     </section>
   );

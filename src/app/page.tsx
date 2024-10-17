@@ -17,7 +17,6 @@ import ImageInputProvider from "@/components/ImageInputProvider";
 import { useViewStore } from "@/lib/store/view";
 import SplitViewPreview from "@/components/SplitViewPreview";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ContextMenuProvider from "@/components/ContextMenuProvider";
 
 const queryClient = new QueryClient();
 
@@ -106,7 +105,7 @@ export default function Page() {
             />
             <ResizablePanel
               ref={settingsPanelRef}
-              minSize={25}
+              minSize={35}
               maxSize={55}
               onExpand={() => {
                 setIsOpen(true);
