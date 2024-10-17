@@ -14,7 +14,7 @@ const ImgDialog = ({ img, onClose }: { img: string; onClose: () => void }) => {
     <AlertDialog open={!!img} onOpenChange={onClose}>
       <AlertDialogContent className="sm:max-w-[425px]">
         <AlertDialogHeader>
-          <AlertDialogTitle>Cropped image</AlertDialogTitle>
+          <AlertDialogTitle></AlertDialogTitle>
           <Button
             variant="ghost"
             className="ml-auto h-6 w-6 p-0"
@@ -23,7 +23,7 @@ const ImgDialog = ({ img, onClose }: { img: string; onClose: () => void }) => {
             <X className="h-4 w-4" />
           </Button>
         </AlertDialogHeader>
-        <div className="flex items-center justify-center p-4">
+        <div className="flex items-center justify-center">
           <Image
             src={img}
             width={370}

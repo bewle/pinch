@@ -1,6 +1,7 @@
 import { useCropDataStore } from "@/lib/store/crop-data";
 import { useFlavorStore } from "@/lib/store/flavor";
 import { useImageUrlStore } from "@/lib/store/image-file";
+import ContextMenuProvider from "./ContextMenuProvider";
 
 export default function SplitViewPreview() {
   const { previewArea } = useCropDataStore();
@@ -47,12 +48,18 @@ const Output = ({
         className="relative h-fit w-[300] overflow-hidden"
         style={{ paddingBottom: `${100 / (width / height)}%` }}
       >
-        <img
-          className="absolute left-0 top-0 origin-top-left"
-          src={imageUrl}
-          alt=""
-          style={imageStyle}
-        />
+        <ContextMenuProvider
+          hasPreview={false}
+          hasImport={false}
+          hasClear={false}
+        >
+          <img
+            className="absolute left-0 top-0 origin-top-left"
+            src={imageUrl}
+            alt=""
+            style={imageStyle}
+          />
+        </ContextMenuProvider>
       </div>
     </div>
   );

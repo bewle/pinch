@@ -23,7 +23,6 @@ import { useState } from "react";
 import { useFlavorStore } from "@/lib/store/flavor";
 import { type Device } from "@/lib/server/getDevices";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 interface DataTableProps<TData, TValue> {
@@ -36,6 +35,7 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const { setAspect } = useFlavorStore();
+  const { setFlavor } = useFlavorStore();
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
@@ -62,10 +62,13 @@ export function DataTable<TData, TValue>({
         />
         <Label className="flex h-fit items-center gap-1 text-muted-foreground">
           <p className="text-sm font-normal">can&apos;t find your device? </p>
-          <Button variant="link" className="w-fit p-0" asChild>
-            <Link className="h-fit opacity-75" href="#">
-              request it here
-            </Link>
+          <Button
+            onClick={() => setFlavor("custom")}
+            variant="link"
+            className="w-fit cursor-pointer p-0"
+            asChild
+          >
+            <p className="h-fit opacity-75">enter a custom resolution</p>
           </Button>
         </Label>
       </div>
