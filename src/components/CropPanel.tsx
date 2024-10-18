@@ -10,13 +10,16 @@ import {
 } from "./ui/tooltip";
 import ImportButton from "./ImportButton";
 import { useImageUrlStore } from "@/lib/store/image-file";
-import ImageDropzone from "./ImageDropzone";
-import CropComponent from "./CropComponent";
+import dynamic from "next/dynamic";
 import { useIsSettingsPanelOpen } from "@/lib/store/settings-panel";
 import PreviewButton from "./PreviewButton";
 import { useInputWindowStore } from "@/lib/store/input-window";
 import { useViewStore } from "@/lib/store/view";
 import ContextMenuProvider from "./ContextMenuProvider";
+import CropComponent from "./CropComponent";
+
+// Dynamically import the Dropzone component with SSR disabled
+const ImageDropzone = dynamic(() => import("./ImageDropzone"), { ssr: false });
 
 export default function CropPanel() {
   const { setIsOpen } = useInputWindowStore();

@@ -1,3 +1,4 @@
+"use client";
 import Dropzone from "react-dropzone";
 import { useState } from "react";
 import { useImageUrlStore } from "@/lib/store/image-file";
