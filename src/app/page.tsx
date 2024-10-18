@@ -17,12 +17,13 @@ import ImageInputProvider from "@/components/ImageInputProvider";
 import { useViewStore } from "@/lib/store/view";
 import SplitViewPreview from "@/components/SplitViewPreview";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useImageUrlStore } from "@/lib/store/image-file";
 
 const queryClient = new QueryClient();
 
 export default function Page() {
   const settingsPanelRef = useRef<ImperativePanelHandle>(null);
-
+  const { imageUrl } = useImageUrlStore();
   const { isOpen, setIsOpen } = useIsSettingsPanelOpen();
   const { view, setView } = useViewStore();
 
@@ -124,7 +125,7 @@ export default function Page() {
         </MediaQuery>
         {/* Mobile */}
         <MediaQuery maxWidth={1226}>
-          <SettingsPanelMobile />
+          {imageUrl ? <CropPanel /> : <SettingsPanelMobile />}
         </MediaQuery>
       </main>
     </QueryClientProvider>

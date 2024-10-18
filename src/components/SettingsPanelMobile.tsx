@@ -9,7 +9,7 @@ export default function SettingsPanel() {
   const { setIsOpen } = useInputWindowStore();
 
   return (
-    <section className="flex h-[85vh] w-full flex-col gap-4 p-6">
+    <section className="flex h-screen flex-col gap-4 p-6 md:mx-32 lg:mx-56">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">pinch</h1>
@@ -23,11 +23,14 @@ export default function SettingsPanel() {
       <div className="flex justify-between gap-4">
         <FlavorSelect />
       </div>
-      <div className="overflow-y-auto">
+      <div className="relative overflow-y-auto">
         <ModelSelect />
       </div>
-
-      <Button onClick={() => setIsOpen(true)}>import</Button>
+      <div>
+        <Button className="w-full" onClick={() => setIsOpen(true)}>
+          import
+        </Button>
+      </div>
     </section>
   );
 }

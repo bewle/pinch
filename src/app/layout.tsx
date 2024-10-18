@@ -19,7 +19,7 @@ export default function RootLayout({
     <html
       suppressHydrationWarning
       lang="en"
-      className={`${GeistSans.variable}`}
+      className={`${GeistSans.variable} debug-screens`}
     >
       <body>
         <Providers>{children}</Providers>
