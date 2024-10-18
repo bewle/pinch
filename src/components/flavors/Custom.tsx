@@ -9,7 +9,7 @@ export default function Custom() {
   const { setAspect } = useFlavorStore();
 
   function onSubmit(data: FieldValues) {
-    setAspect(data.width, data.height);
+    setAspect(Number(data.width), Number(data.height));
   }
 
   return (

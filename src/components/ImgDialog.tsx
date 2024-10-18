@@ -53,9 +53,11 @@ const ImgDialog = ({ img, onClose }: { img: string; onClose: () => void }) => {
               }}
               className="flex gap-1"
             >
-              export
               {exportIcon === "download" ? (
-                <ArrowDownToLine size={16} />
+                <>
+                  <p>export</p>
+                  <ArrowDownToLine size={16} />
+                </>
               ) : (
                 <Check size={16} />
               )}

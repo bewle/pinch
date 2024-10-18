@@ -13,21 +13,14 @@ import ImageDropzone from "./ImageDropzone";
 import CropComponent from "./CropComponent";
 import { useIsSettingsPanelOpen } from "@/lib/store/settings-panel";
 import PreviewButton from "./PreviewButton";
-import {
-  ContextMenu,
-  ContextMenuTrigger,
-  ContextMenuContent,
-  ContextMenuItem,
-} from "./ui/context-menu";
 import { useInputWindowStore } from "@/lib/store/input-window";
 import { useViewStore } from "@/lib/store/view";
 import ContextMenuProvider from "./ContextMenuProvider";
 
 export default function CropPanel() {
   const { setIsOpen } = useInputWindowStore();
-  const { setView } = useViewStore();
   const [shiftHeld, setShiftHeld] = useState(false);
-  const { imageUrl, setImageUrl } = useImageUrlStore();
+  const { imageUrl } = useImageUrlStore();
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

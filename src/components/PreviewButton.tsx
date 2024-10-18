@@ -10,7 +10,7 @@ import { useCroppedImageStore } from "@/lib/store/cropped-image";
 import { useCropDataStore } from "@/lib/store/crop-data";
 import getCroppedImg from "@/lib/handle-crop";
 import { useImageUrlStore } from "@/lib/store/image-file";
-import ImgDialog from "@/app/test/ImgDialog";
+import ImgDialog from "./ImgDialog";
 import { downloadImage } from "@/lib/download-image";
 
 export default function PreviewButton({ shiftHeld }: { shiftHeld: boolean }) {

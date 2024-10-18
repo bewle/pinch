@@ -2,6 +2,7 @@ import { useCropDataStore } from "@/lib/store/crop-data";
 import { useFlavorStore } from "@/lib/store/flavor";
 import { useImageUrlStore } from "@/lib/store/image-file";
 import ContextMenuProvider from "./ContextMenuProvider";
+import Image from "next/image";
 
 export default function SplitViewPreview() {
   const { previewArea } = useCropDataStore();
@@ -53,8 +54,10 @@ const Output = ({
           hasImport={false}
           hasClear={false}
         >
-          <img
+          <Image
             className="absolute left-0 top-0 origin-top-left"
+            width={width}
+            height={height}
             src={imageUrl}
             alt=""
             style={imageStyle}
