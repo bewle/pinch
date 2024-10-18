@@ -9,6 +9,9 @@ import {
 import { useInputWindowStore } from "@/lib/store/input-window";
 import { useImageUrlStore } from "@/lib/store/image-file";
 import { useViewStore } from "@/lib/store/view";
+import getCroppedImg from "@/lib/handle-crop";
+import { useCroppedImageStore } from "@/lib/store/cropped-image";
+import { useCropDataStore } from "@/lib/store/crop-data";
 
 export default function ContextMenuProvider({
   children,
@@ -24,8 +27,19 @@ export default function ContextMenuProvider({
   hasExport?: boolean;
 }) {
   const { setIsOpen } = useInputWindowStore();
-  const { setImageUrl } = useImageUrlStore();
+  const { imageUrl, setImageUrl } = useImageUrlStore();
   const { view, setView } = useViewStore();
+  const { croppedAreaPixels } = useCropDataStore();
+  const { croppedImage, setCroppedImage } = useCroppedImageStore();
+
+  const showCroppedImage = async () => {
+    try {
+      const croppedImage = await getCroppedImg(imageUrl, croppedAreaPixels, 0);
+      setCroppedImage(croppedImage!);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <ContextMenu>
@@ -48,8 +62,34 @@ export default function ContextMenuProvider({
             clear
           </ContextMenuItem>
         ) : null}
-        {hasPreview ? <ContextMenuItem>preview</ContextMenuItem> : null}
-        {hasExport ? <ContextMenuItem>export</ContextMenuItem> : null}
+        {hasPreview ? (
+          <ContextMenuItem
+            onClick={async () => {
+              await showCroppedImage();
+            }}
+          >
+            preview
+          </ContextMenuItem>
+        ) : null}
+        {hasExport ? (
+          <ContextMenuItem
+            onClick={async () => {
+              const croppedImage = await getCroppedImg(
+                imageUrl,
+                croppedAreaPixels,
+                0,
+              );
+              const link = document.createElement("a");
+              link.href = croppedImage!;
+              link.download = "image.png";
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
+          >
+            export
+          </ContextMenuItem>
+        ) : null}
       </ContextMenuContent>
     </ContextMenu>
   );
