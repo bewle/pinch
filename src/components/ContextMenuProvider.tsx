@@ -12,6 +12,7 @@ import { useViewStore } from "@/lib/store/view";
 import getCroppedImg from "@/lib/handle-crop";
 import { useCroppedImageStore } from "@/lib/store/cropped-image";
 import { useCropDataStore } from "@/lib/store/crop-data";
+import { downloadImage } from "@/lib/download-image";
 
 export default function ContextMenuProvider({
   children,
@@ -30,7 +31,7 @@ export default function ContextMenuProvider({
   const { imageUrl, setImageUrl } = useImageUrlStore();
   const { view, setView } = useViewStore();
   const { croppedAreaPixels } = useCropDataStore();
-  const { croppedImage, setCroppedImage } = useCroppedImageStore();
+  const { setCroppedImage } = useCroppedImageStore();
 
   const showCroppedImage = async () => {
     try {
@@ -74,17 +75,7 @@ export default function ContextMenuProvider({
         {hasExport ? (
           <ContextMenuItem
             onClick={async () => {
-              const croppedImage = await getCroppedImg(
-                imageUrl,
-                croppedAreaPixels,
-                0,
-              );
-              const link = document.createElement("a");
-              link.href = croppedImage!;
-              link.download = "image.png";
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
+              await downloadImage(imageUrl, croppedAreaPixels);
             }}
           >
             export

@@ -11,6 +11,7 @@ import { useCropDataStore } from "@/lib/store/crop-data";
 import getCroppedImg from "@/lib/handle-crop";
 import { useImageUrlStore } from "@/lib/store/image-file";
 import ImgDialog from "@/app/test/ImgDialog";
+import { downloadImage } from "@/lib/download-image";
 
 export default function PreviewButton({ shiftHeld }: { shiftHeld: boolean }) {
   const { croppedAreaPixels } = useCropDataStore();
@@ -38,7 +39,13 @@ export default function PreviewButton({ shiftHeld }: { shiftHeld: boolean }) {
         <Tooltip>
           <TooltipTrigger asChild>
             {shiftHeld ? (
-              <Button variant="outline" size="icon">
+              <Button
+                onClick={async () => {
+                  await downloadImage(imageUrl, croppedAreaPixels);
+                }}
+                variant="outline"
+                size="icon"
+              >
                 <ArrowDownToLine />
               </Button>
             ) : (
