@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Cog, Columns2, Image, Maximize, Trash2 } from "lucide-react";
@@ -23,7 +24,7 @@ export default function CropPanel() {
   const { imageUrl } = useImageUrlStore();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof document !== "undefined") {
       const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === "Shift" && !shiftHeld) {
           setShiftHeld(true);
@@ -36,12 +37,12 @@ export default function CropPanel() {
         }
       };
 
-      window.addEventListener("keydown", handleKeyDown);
-      window.addEventListener("keyup", handleKeyUp);
+      document.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("keyup", handleKeyUp);
 
       return () => {
-        window.removeEventListener("keydown", handleKeyDown);
-        window.removeEventListener("keyup", handleKeyUp);
+        document.removeEventListener("keydown", handleKeyDown);
+        document.removeEventListener("keyup", handleKeyUp);
       };
     }
   }, [shiftHeld]);
