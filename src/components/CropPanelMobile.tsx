@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { Cog, Columns2, Image, Maximize, Trash2 } from "lucide-react";
+import { Image, Trash2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -11,7 +11,6 @@ import {
 import ImportButton from "./ImportButton";
 import { useImageUrlStore } from "@/lib/store/image-file";
 import dynamic from "next/dynamic";
-import { useIsSettingsPanelOpen } from "@/lib/store/settings-panel";
 import PreviewButton from "./PreviewButton";
 import { useInputWindowStore } from "@/lib/store/input-window";
 import { useViewStore } from "@/lib/store/view";
@@ -59,7 +58,6 @@ export default function CropPanel() {
       {imageUrl ? (
         <>
           <ZoomSlider />
-          <RightButtons />
           <BottomRightButtons />
           <ContextMenuProvider>
             <CropComponent shiftHeld={shiftHeld} />
@@ -107,78 +105,7 @@ function LeftButtons({
   );
 }
 
-function RightButtons() {
-  const { setIsOpen } = useIsSettingsPanelOpen();
-  const { view, setView } = useViewStore();
-
-  return (
-    <div className="absolute right-4 top-4 z-10 flex flex-col gap-2 opacity-30 transition-opacity duration-300 hover:opacity-100">
-      {view !== "fullscreen" ? (
-        <TooltipProvider delayDuration={0}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                onClick={() => {
-                  setIsOpen(false);
-                  setView("fullscreen");
-                }}
-                variant="outline"
-                size="icon"
-              >
-                <Maximize />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="left">
-              <p>fullscreen</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ) : null}
-      {view !== "split" ? (
-        <TooltipProvider delayDuration={0}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                onClick={() => {
-                  setIsOpen(false);
-                  setView("split");
-                }}
-                variant="outline"
-                size="icon"
-              >
-                <Columns2 />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="left">
-              <p>split view</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ) : null}
-      {view !== "settings" ? (
-        <TooltipProvider delayDuration={0}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                onClick={() => {
-                  setIsOpen(false);
-                  setView("settings");
-                }}
-                variant="outline"
-                size="icon"
-              >
-                <Cog />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="left">
-              <p>settings</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ) : null}
-    </div>
-  );
-}
+//
 
 function BottomRightButtons() {
   const { setImageUrl } = useImageUrlStore();

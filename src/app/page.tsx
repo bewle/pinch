@@ -1,5 +1,6 @@
 "use client";
 import CropPanel from "@/components/CropPanel";
+import CropPanelMobile from "@/components/CropPanelMobile";
 import ProcessingAlert from "@/components/ProcessingAlert";
 import SettingsPanel from "@/components/SettingsPanel";
 import SettingsPanelMobile from "@/components/SettingsPanelMobile";
@@ -125,7 +126,7 @@ export default function Page() {
         </MediaQuery>
         {/* Mobile */}
         <MediaQuery maxWidth={1226}>
-          {imageUrl ? <CropPanel /> : <SettingsPanelMobile />}
+          {imageUrl ? <CropPanelMobile /> : <SettingsPanelMobile />}
         </MediaQuery>
       </main>
     </QueryClientProvider>
