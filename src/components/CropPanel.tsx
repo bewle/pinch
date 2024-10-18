@@ -17,8 +17,8 @@ import { useInputWindowStore } from "@/lib/store/input-window";
 import { useViewStore } from "@/lib/store/view";
 import ContextMenuProvider from "./ContextMenuProvider";
 import CropComponent from "./CropComponent";
+import ZoomSlider from "./ZoomSlider";
 
-// Dynamically import the Dropzone component with SSR disabled
 const ImageDropzone = dynamic(() => import("./ImageDropzone"), { ssr: false });
 
 export default function CropPanel() {
@@ -55,12 +55,16 @@ export default function CropPanel() {
       <ImageDropzone />
       <LeftButtons shiftHeld={shiftHeld} imageUrl={imageUrl} />
       <BottomLeftText />
-      {imageUrl && <RightButtons />}
-      {imageUrl && <BottomRightButtons />}
+
       {imageUrl ? (
-        <ContextMenuProvider>
-          <CropComponent shiftHeld={shiftHeld} />
-        </ContextMenuProvider>
+        <>
+          <ZoomSlider />
+          <RightButtons />
+          <BottomRightButtons />
+          <ContextMenuProvider>
+            <CropComponent shiftHeld={shiftHeld} />
+          </ContextMenuProvider>
+        </>
       ) : (
         <ContextMenuProvider
           hasClear={false}
@@ -96,7 +100,7 @@ function LeftButtons({
   imageUrl: string;
 }) {
   return (
-    <div className="absolute left-4 top-4 z-10 flex flex-col gap-2 fade-in">
+    <div className="absolute left-4 top-4 z-10 flex flex-col gap-2 opacity-30 transition-opacity duration-300 fade-in hover:opacity-100">
       <ImportButton />
       {imageUrl ? <PreviewButton shiftHeld={shiftHeld} /> : null}
     </div>
@@ -108,7 +112,7 @@ function RightButtons() {
   const { view, setView } = useViewStore();
 
   return (
-    <div className="absolute right-4 top-4 z-10 flex flex-col gap-2">
+    <div className="absolute right-4 top-4 z-10 flex flex-col gap-2 opacity-30 transition-opacity duration-300 hover:opacity-100">
       {view !== "fullscreen" ? (
         <TooltipProvider delayDuration={0}>
           <Tooltip>
@@ -181,7 +185,7 @@ function BottomRightButtons() {
   const { view, setView } = useViewStore();
 
   return (
-    <div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
+    <div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2 opacity-30 transition-opacity duration-300 hover:opacity-100">
       <TooltipProvider delayDuration={0}>
         <Tooltip>
           <TooltipTrigger asChild>
