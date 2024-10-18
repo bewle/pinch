@@ -23,25 +23,27 @@ export default function CropPanel() {
   const { imageUrl } = useImageUrlStore();
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Shift" && !shiftHeld) {
-        setShiftHeld(true);
-      }
-    };
+    if (typeof window !== "undefined") {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Shift" && !shiftHeld) {
+          setShiftHeld(true);
+        }
+      };
 
-    const handleKeyUp = (event: KeyboardEvent) => {
-      if (event.key === "Shift" && shiftHeld) {
-        setShiftHeld(false);
-      }
-    };
+      const handleKeyUp = (event: KeyboardEvent) => {
+        if (event.key === "Shift" && shiftHeld) {
+          setShiftHeld(false);
+        }
+      };
 
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+      window.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("keyup", handleKeyUp);
 
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
+      return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+        window.removeEventListener("keyup", handleKeyUp);
+      };
+    }
   }, [shiftHeld]);
 
   return (
