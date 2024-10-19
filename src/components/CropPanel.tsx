@@ -18,8 +18,9 @@ import { useViewStore } from "@/lib/store/view";
 import ContextMenuProvider from "./ContextMenuProvider";
 import CropComponent from "./CropComponent";
 import ZoomSlider from "./ZoomSlider";
+import ImageDropzone from "./ImageDropzone-filepond";
 
-const ImageDropzone = dynamic(() => import("./ImageDropzone"), { ssr: false });
+// const ImageDropzone = dynamic(() => import("./ImageDropzone"), { ssr: false });
 
 export default function CropPanel() {
   const { setIsOpen } = useInputWindowStore();
@@ -52,9 +53,9 @@ export default function CropPanel() {
 
   return (
     <section className="relative flex h-full flex-col items-center justify-center gap-4">
-      <ImageDropzone />
       <LeftButtons shiftHeld={shiftHeld} imageUrl={imageUrl} />
       <BottomLeftText />
+      {/* <ImageDropzone /> */}
 
       {imageUrl ? (
         <>
@@ -71,21 +72,21 @@ export default function CropPanel() {
           hasPreview={false}
           hasExport={false}
         >
-          <Button
+          {/* <Button
             onClick={() => {
               setIsOpen(true);
             }}
             className="group size-64 select-none rounded-lg border-2 border-dotted bg-transparent p-8 opacity-50 transition-opacity hover:cursor-pointer hover:bg-muted/40 hover:opacity-75"
           >
             <div className="flex flex-col items-center gap-4 text-foreground transition-transform group-hover:scale-[102%]">
-              {/* eslint-disable-next-line jsx-a11y/alt-text */}
               <Image size={64} />
               <div className="flex flex-col items-center gap-2">
                 <p>choose an image</p>
                 <p>paste, drag, or click/tap</p>
               </div>
             </div>
-          </Button>
+          </Button> */}
+          <ImageDropzone />
         </ContextMenuProvider>
       )}
     </section>
