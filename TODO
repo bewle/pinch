@@ -1,5 +1,5 @@
 TODO:
     □ undo/redo
-    □ add zoom slider functionality
+    ✔ zoom slider functionality @done(24-10-22 17:11)
     □ warning on tab close
     □ fix preview image stretching

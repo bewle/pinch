@@ -26,7 +26,22 @@ export default function Page() {
   const settingsPanelRef = useRef<ImperativePanelHandle>(null);
   const { imageUrl } = useImageUrlStore();
   const { isOpen, setIsOpen } = useIsSettingsPanelOpen();
-  const { view, setView } = useViewStore();
+  const { view } = useViewStore();
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (imageUrl) {
+        event.preventDefault();
+        event.returnValue = ""; // This is required for some browsers to show the confirmation dialog
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [imageUrl]);
 
   const expandPanel = (size = 30) => {
     const panel = settingsPanelRef.current;
