@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { Cog, Columns2, Image, Maximize, Trash2 } from "lucide-react";
+import { Cog, Columns2, Maximize, Trash2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -10,20 +10,15 @@ import {
 } from "./ui/tooltip";
 import ImportButton from "./ImportButton";
 import { useImageUrlStore } from "@/lib/store/image-file";
-import dynamic from "next/dynamic";
 import { useIsSettingsPanelOpen } from "@/lib/store/settings-panel";
 import PreviewButton from "./PreviewButton";
-import { useInputWindowStore } from "@/lib/store/input-window";
 import { useViewStore } from "@/lib/store/view";
 import ContextMenuProvider from "./ContextMenuProvider";
 import CropComponent from "./CropComponent";
 import ZoomSlider from "./ZoomSlider";
 import ImageDropzone from "./ImageDropzone-filepond";
 
-// const ImageDropzone = dynamic(() => import("./ImageDropzone"), { ssr: false });
-
 export default function CropPanel() {
-  const { setIsOpen } = useInputWindowStore();
   const [shiftHeld, setShiftHeld] = useState(false);
   const { imageUrl } = useImageUrlStore();
 

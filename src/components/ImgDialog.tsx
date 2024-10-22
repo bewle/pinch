@@ -35,7 +35,7 @@ const ImgDialog = ({ img, onClose }: { img: string; onClose: () => void }) => {
             width={300}
             height={300}
             alt="crop result"
-            className="max-h-[600px]"
+            className="max-h-[60vh] w-auto"
           />
           <div className="flex w-full flex-row gap-4 *:flex-1">
             <Button variant="outline" onClick={onClose}>
