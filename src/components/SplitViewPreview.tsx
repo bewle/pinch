@@ -44,7 +44,7 @@ const Output = ({
   };
 
   return (
-    <div className="grid h-screen place-items-center">
+    <div className="grid h-screen w-full place-items-center">
       <div
         className="relative h-fit w-[300] overflow-hidden"
         style={{ paddingBottom: `${100 / (width / height)}%` }}
