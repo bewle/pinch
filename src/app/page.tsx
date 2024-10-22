@@ -57,14 +57,16 @@ export default function Page() {
   }, [isOpen]);
 
   useEffect(() => {
+    console.log("view changed", view);
     switch (view) {
       case "split":
-        expandPanel(50);
+        expandPanel();
         break;
       case "fullscreen":
         collapsePanel();
         break;
       case "settings":
+        console.log("expanding settings panel");
         expandPanel();
         break;
       default:
@@ -114,9 +116,6 @@ export default function Page() {
               }}
               onCollapse={() => {
                 setIsOpen(false);
-                if (view === "settings") {
-                  setView("fullscreen");
-                }
               }}
               collapsible
             >
