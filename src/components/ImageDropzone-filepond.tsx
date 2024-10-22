@@ -1,31 +1,32 @@
 import { useImageUrlStore } from "@/lib/store/image-file";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Upload } from "lucide-react";
 import { useInputWindowStore } from "@/lib/store/input-window";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ImageDropzone() {
+  const { toast } = useToast();
   const [dragOver, setDragOver] = useState(false);
   const { setImageUrl } = useImageUrlStore();
   const { setIsOpen } = useInputWindowStore();
-
-  useEffect(() => {
-    if (dragOver) {
-      console.log("drag over");
-    }
-  }, [dragOver]);
 
   function handleDrop(e: React.DragEvent<HTMLDivElement>) {
     e.preventDefault();
     e.stopPropagation();
     setDragOver(false);
+    console.log(e);
     const file = e.dataTransfer.files[0];
-    if (file) {
+    if (file?.type.startsWith("image/")) {
       const blob = new Blob([file], { type: file.type });
       const imageUrl = URL.createObjectURL(blob);
       setImageUrl(imageUrl);
     } else {
       setImageUrl("");
+      toast({
+        title: "invalid file type",
+        description: "please upload an image file",
+      });
     }
   }
 
@@ -49,6 +50,10 @@ export default function ImageDropzone() {
         onClick={() => setIsOpen(true)}
         variant="outline"
         className="group flex size-48 flex-col gap-2 *:opacity-40"
+        style={{
+          pointerEvents: dragOver ? "none" : "auto",
+          backgroundColor: dragOver ? "hsl(var(--muted))" : "transparent",
+        }}
       >
         <Upload
           className="transition-opacity group-hover:opacity-100"
