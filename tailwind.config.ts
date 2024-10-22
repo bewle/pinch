@@ -62,5 +62,11 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate"), require('tailwindcss-motion'), require("tailwindcss-debug-screens"), require('daisyui'),],
+	plugins: [
+		require("tailwindcss-animate"),
+		require("tailwindcss-motion"),
+		require("tailwindcss-debug-screens"),
+		require("daisyui"),
+		require("@tailwindcss/typography"),
+	],
 } satisfies Config;
